@@ -13,6 +13,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
 
     test "request with playlists displays playlist information" do
       Playlist.create!(name: "Cat Videos")
+
       get playlists_path
 
       assert_response :success
@@ -39,11 +40,12 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
 
       assert_response :success
       assert_match "Cat Videos", @response.body
-      assert_select "body>div", /ID: short_video_123/
+      assert_match "ID: short_video_123", @response.body
     end
 
     test "request with an invalid ID is unsuccessful" do
       get playlist_path(0)
+
       assert_response :not_found
     end
   end
@@ -88,9 +90,10 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
   class PlaylistsControllerEditTest < PlaylistsControllerTest
     test "request is successful" do
       playlist = Playlist.create!(name: "Cat Videos")
+
       get edit_playlist_path(playlist)
+
       assert_response :success
-      # TODO: Update after UI finalized
       assert_match "Update Playlist", @response.body
       assert_match "Cat Videos", @response.body
     end
