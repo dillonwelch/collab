@@ -2,26 +2,22 @@
   <!--  TODO: controller?-->
   <% playlist_options = options_for_select(@playlists) %>
 
-<!--  TODO: col-* to figure this out?-->
-  <% @result["videos"].each_slice(5) do |videos| %>
-    <div class="row">
-      <% videos.each do |video| %>
-        <div class="col" style="background-color: green; border: 1px solid;">
-          <div><%= image_tag(video["thumbnail_url"], alt: "Thumbnail image for video #{video['video_id']}") %></div>
-          <div>Title: <%= video["title"] %></div>
-          <!--          TODO: add ...-->
-          <div>Description: <%= video["description"].first(20) %></div>
-          <div><%= video["views"] %> views</div>
-          <% unless playlist_options.empty? %>
-            <%= form_with model: PlaylistVideo.new do |form| %>
-              <%= form.hidden_field :video_id, value: video["video_id"] %>
-              <%= form.select :playlist_id, playlist_options %>
-              <%= form.submit "Add to playlist"%>
-            <% end %>
+  <div class="row">
+    <% @result["videos"].each do |video| %>
+      <div class="col" style="background-color: green; border: 1px solid;">
+        <div><%= image_tag(video["thumbnail_url"], alt: "Thumbnail image for video #{video['video_id']}") %></div>
+        <div>Title: <%= video["title"] %></div>
+        <!--          TODO: add ...-->
+        <div>Description: <%= video["description"].first(20) %></div>
+        <div><%= video["views"] %> views</div>
+        <% unless playlist_options.empty? %>
+          <%= form_with model: PlaylistVideo.new do |form| %>
+            <%= form.hidden_field :video_id, value: video["video_id"] %>
+            <%= form.select :playlist_id, playlist_options %>
+            <%= form.submit "Add to playlist"%>
           <% end %>
-<!--          TODO: last row does not have 3-->
-        </div>
-      <% end %>
-    </div>
-  <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>
