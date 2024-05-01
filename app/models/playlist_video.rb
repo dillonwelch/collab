@@ -1,8 +1,8 @@
-class PlaylistSong < ApplicationRecord
+class PlaylistVideo < ApplicationRecord
   belongs_to :playlist
 
   before_create do
-    self.position = (playlist.playlist_songs.maximum(:position) || 0) + 1
+    self.position = (playlist.playlist_videos.maximum(:position) || 0) + 1
   end
 
   validates :video_id, presence: true

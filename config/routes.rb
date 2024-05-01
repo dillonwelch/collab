@@ -10,5 +10,5 @@ Rails.application.routes.draw do
 
   resources :playlists
   # TODO: only use needed routes
-  resources :playlist_songs
+  resources :playlist_videos
 end

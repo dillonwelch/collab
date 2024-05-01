@@ -1,6 +1,6 @@
 require "test_helper"
 
-class PlaylistSongsControllerTest < ActionDispatch::IntegrationTest
+class PlaylistVideosControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

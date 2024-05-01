@@ -12,10 +12,10 @@ class PlaylistTest < ActiveSupport::TestCase
     assert_equal playlist.errors.messages[:name], ["has already been taken"]
   end
 
-  test "has an association to PlaylistSong" do
+  test "has an association to PlaylistVideo" do
     playlist = Playlist.create!(name: "Good test playlist")
-    one = PlaylistSong.create!(playlist: playlist, video_id: "123")
-    two = PlaylistSong.create!(playlist: playlist, video_id: "456")
-    assert_equal playlist.playlist_songs, [one, two]
+    one = PlaylistVideo.create!(playlist: playlist, video_id: "123")
+    two = PlaylistVideo.create!(playlist: playlist, video_id: "456")
+    assert_equal playlist.playlist_videos, [one, two]
   end
 end

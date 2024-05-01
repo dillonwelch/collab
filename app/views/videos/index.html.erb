@@ -12,7 +12,7 @@
           <!--          TODO: add ...-->
           <div>Description: <%= video["description"].first(20) %></div>
           <div><%= video["views"] %> views</div>
-          <%= form_with model: PlaylistSong.new do |form| %>
+          <%= form_with model: PlaylistVideo.new do |form| %>
             <%= form.hidden_field :video_id, value: video["video_id"] %>
             <%= form.select :playlist_id, playlist_options %>
             <%= form.submit "Add to playlist"%>
