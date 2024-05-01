@@ -1,6 +1,5 @@
 class Playlist < ApplicationRecord
-  # TODO: dependent destroy
-  has_many :playlist_videos # TODO: Nested?
+  has_many :playlist_videos, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
 end

@@ -18,4 +18,14 @@ class PlaylistTest < ActiveSupport::TestCase
     two = PlaylistVideo.create!(playlist: playlist, video_id: "456")
     assert_equal playlist.playlist_videos, [one, two]
   end
+
+  test "destroys associated PlaylistVideos upon destruction" do
+    playlist = Playlist.create!(name: "Good test playlist")
+    one = PlaylistVideo.create!(playlist: playlist, video_id: "123")
+    two = PlaylistVideo.create!(playlist: playlist, video_id: "456")
+
+    assert_changes -> { PlaylistVideo.count }, from: 2, to: 0 do
+      playlist.destroy!
+    end
+  end
 end
