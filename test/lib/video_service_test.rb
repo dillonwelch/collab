@@ -31,6 +31,7 @@ class VideoServiceTest < ActiveSupport::TestCase
   class VideoServiceGetTest < VideoServiceTest
     setup do
       # TODO: Mock API call
+      # TODO: test caching
       @result = VideoService.get
     end
 
@@ -39,7 +40,7 @@ class VideoServiceTest < ActiveSupport::TestCase
     end
 
     test "contains the right amount of videos" do
-      assert_equal 20, @result["videos"].length
+      assert_equal 92, @result["videos"].length
     end
 
     test "contains the right video information" do

@@ -6,6 +6,7 @@ class VideoService
     get_by_video_id: :video_service_get_by_video_id
   }
 
+  # TODO: docs
   def self.cache_bust
     CACHE_KEYS.values.each do |key|
       Rails.cache.delete(key)
@@ -13,18 +14,27 @@ class VideoService
   end
 
   def self.get
-    # TODO: cache bust?
     # TODO: enable cache
     # TODO: docs
     # TODO: pagination
     Rails.cache.fetch(CACHE_KEYS[__method__]) do
-      uri = URI("#{ENV['BASE_API_URL']}/videos")
-      JSON.parse(Net::HTTP.get(uri))
+      page = 1
+      data = { "videos" => [] }
+      while true do
+        uri = URI("#{ENV['BASE_API_URL']}/videos?page=#{page}")
+        result = JSON.parse(Net::HTTP.get(uri))
+        if result["videos"].present?
+          data["videos"] += result["videos"]
+          page += 1
+        else
+          break
+        end
+      end
+      data
     end
   end
 
   def self.get_by_video_id(video_id)
-    # TODO: cache bust?
     # TODO: enable cache
     # TODO: docs
     # TODO: pagination
