@@ -79,10 +79,6 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     test "request is successful" do
       get new_playlist_path
       assert_response :success
-    end
-
-    test "request displays the right text" do
-      get new_playlist_path
       # TODO: Update after UI finalized
       assert_select "body", /Create Playlist/
     end
@@ -111,6 +107,43 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
       assert_difference -> { Playlist.count }, 0 do
         post playlists_path, params: { playlist: { name: "" } }
       end
+
+      assert_match "Name can&#39;t be blank", @response.body
+    end
+  end
+
+  class PlaylistsControllerEditTest < PlaylistsControllerTest
+    test "request is successful" do
+      playlist = Playlist.create!(name: "Cat Videos")
+      get edit_playlist_path(playlist)
+      assert_response :success
+      # TODO: Update after UI finalized
+      assert_match "Update Playlist", @response.body
+      assert_match "Cat Videos", @response.body
+    end
+  end
+
+  class PlaylistsControllerUpdateTest < PlaylistsControllerTest
+    test "request with valid params updates the playlist" do
+      playlist = Playlist.create!(name: "Cat Videos")
+      patch playlist_path(playlist), params: { playlist: { name: "Dog Videos" } }
+      assert_redirected_to playlist_path(playlist)
+    end
+
+    # TODO: standardize verbiage across test names
+    test "request with a duplicated name does not update the playlist" do
+      playlist = Playlist.create!(name: "Cat Videos")
+      playlist2 = Playlist.create!(name: "Dog Videos")
+
+      patch playlist_path(playlist), params: { playlist: { name: "Dog Videos" } }
+
+      assert_match "Name has already been taken", @response.body
+    end
+
+    test "request with an empty name does not update the playlist" do
+      playlist = Playlist.create!(name: "Cat Videos")
+
+      patch playlist_path(playlist), params: { playlist: { name: "" } }
 
       assert_match "Name can&#39;t be blank", @response.body
     end
