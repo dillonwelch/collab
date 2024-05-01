@@ -1,10 +1,6 @@
 require "test_helper"
 
 class VideosControllerTest < ActionDispatch::IntegrationTest
-  # TODO: Move to helper?
-  SHORT_VIDEO = MOCKED_DATA.first
-  LONG_VIDEO = MOCKED_DATA.second
-
   # TODO: use setup?
   def visit_index(playlist: true)
     Playlist.create!(name: "Good Playlist") if playlist
@@ -19,39 +15,39 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
   test "video image thumbnail is displayed" do
     visit_index
     assert_select(
-      "##{SHORT_VIDEO['video_id']}>div",
-      html: "<img alt=\"Thumbnail image for video #{SHORT_VIDEO['video_id']}\" src=\"#{SHORT_VIDEO['thumbnail_url']}\">"
+      "##{short_video['video_id']}>div",
+      html: "<img alt=\"Thumbnail image for video #{short_video['video_id']}\" src=\"#{short_video['thumbnail_url']}\">"
     )
   end
 
   test "video title is displayed" do
     visit_index
-    assert_select "##{SHORT_VIDEO['video_id']}>div", "Title: #{SHORT_VIDEO['title']}"
+    assert_select "##{short_video['video_id']}>div", "Title: #{short_video['title']}"
   end
 
   test "video description is displayed" do
     visit_index
-    assert_select "##{SHORT_VIDEO['video_id']}>div", "Description: #{SHORT_VIDEO['description']}"
+    assert_select "##{short_video['video_id']}>div", "Description: #{short_video['description']}"
   end
 
   test "video description is truncated when long" do
     visit_index
     # TODO: test long description with ...
-    assert_select "##{LONG_VIDEO['video_id']}>div",  "Description: #{LONG_VIDEO['description'].first(20)}"
+    assert_select "##{long_video['video_id']}>div",  "Description: #{long_video['description'].first(20)}"
   end
 
   test "video views are displayed" do
     visit_index
-    assert_select "##{SHORT_VIDEO['video_id']}>div", "#{SHORT_VIDEO['views']} views"
+    assert_select "##{short_video['video_id']}>div", "#{short_video['views']} views"
   end
 
   test "add to playlist is hidden if there are no playlists" do
     visit_index(playlist: false)
-    assert_select "##{SHORT_VIDEO['video_id']}>form", false
+    assert_select "##{short_video['video_id']}>form", false
   end
 
   test "add to playlist is present if there are playlists" do
     visit_index
-    assert_select "##{SHORT_VIDEO['video_id']}>form", "Good Playlist"
+    assert_select "##{short_video['video_id']}>form", "Good Playlist"
   end
 end
