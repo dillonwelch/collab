@@ -1,2 +1,13 @@
-<h1>Playlists#index</h1>
-<p>Find me in app/views/playlists/index.html.erb</p>
+<h1>Playlists</h1>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Actions</th>
+  </tr>
+  <% @playlists.each do |playlist| %>
+    <tr>
+      <td><%= playlist.name %></td>
+      <td><%= link_to("Edit", edit_playlist_path(playlist.id)) %></td>
+    </tr>
+  <% end %>
+</table>
