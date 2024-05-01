@@ -93,10 +93,6 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
       assert_difference -> { Playlist.where(name: "Cat Videos").count }, 1 do
         post playlists_path, params: { playlist: { name: "Cat Videos" } }
       end
-    end
-
-    test "request redirects to the playlist show page with valid params" do
-      post playlists_path, params: { playlist: { name: "Cat Videos" } }
 
       assert_redirected_to playlist_path(Playlist.last)
     end
@@ -107,14 +103,16 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
       assert_difference -> { Playlist.where(name: "Cat Videos").count }, 0 do
         post playlists_path, params: { playlist: { name: "Cat Videos" } }
       end
-    end
-
-    test "request with a duplicated name displays the new page" do
-      Playlist.create!(name: "Cat Videos")
-
-      post playlists_path, params: { playlist: { name: "Cat Videos" } }
 
       assert_match "Name has already been taken", @response.body
+    end
+
+    test "request with an empty name does not create a new playlist" do
+      assert_difference -> { Playlist.count }, 0 do
+        post playlists_path, params: { playlist: { name: "" } }
+      end
+
+      assert_match "Name can&#39;t be blank", @response.body
     end
   end
 end
