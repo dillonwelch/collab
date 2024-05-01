@@ -28,10 +28,25 @@ class VideoServiceTest < ActiveSupport::TestCase
     end
   end
 
+  # If the cache is not working, we will make a second set of API calls which will cause VCR to throw an error.
+  class VideoServiceCachingTest < VideoServiceTest
+    test "get uses cache" do
+      VCR.use_cassette "lib/video_service/get", allow_unused_http_interactions: false do
+        VideoService.get
+        VideoService.get
+      end
+    end
+
+    test "get_by_video_id uses cache" do
+      VCR.use_cassette "lib/video_service/get", allow_unused_http_interactions: false do
+        VideoService.get_by_video_id("123")
+        VideoService.get_by_video_id("123")
+      end
+    end
+  end
+
   class VideoServiceGetTest < VideoServiceTest
     setup do
-      # TODO: Mock API call
-      # TODO: test caching
       VCR.use_cassette "lib/video_service/get", allow_unused_http_interactions: false do
         @result = VideoService.get
       end
