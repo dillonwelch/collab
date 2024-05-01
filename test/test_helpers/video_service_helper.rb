@@ -7,7 +7,7 @@ module VideoServiceHelper
       "video_id" => "short_video_123",
       "thumbnail_url" => "https://i.ytimg.com/vi/H1tQhK0n5Qk/default.jpg",
       "description" => "Test Description",
-      "title" => "Test Title",
+      "title" => "Short Video",
       "views" => 5
     }
   end
@@ -19,7 +19,7 @@ module VideoServiceHelper
       "video_id" => "long_video_123",
       "thumbnail_url" => "https://i.ytimg.com/vi/H1tQhK0n5Qk/default.jpg",
       "description" => "meow" * 10,
-      "title" => "Long Video Test Title",
+      "title" => "Long Video",
       "views" => 6
     }
   end

@@ -2,7 +2,6 @@ require "net/http"
 
 class PlaylistVideosController < ApplicationController
   def create
-    # TODO: validate video ID is legit
     # TODO: proper error response
     @playlist_video = PlaylistVideo.new(playlist_video_params)
     @playlist_video.save!
