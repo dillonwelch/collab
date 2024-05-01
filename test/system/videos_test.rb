@@ -16,11 +16,13 @@ class VideosTest < ApplicationSystemTestCase
     mock_video_service do
       visit root_path
 
-      click_on "Create Playlist"
-      fill_in "Name", with: "Cat Videos"
-      click_button "Create Playlist"
+      assert_changes -> { Playlist.where(name: "Cat Videos").count }, 1 do
+        click_on "Create Playlist"
+        fill_in "Name", with: "Cat Videos"
+        click_button "Create Playlist"
 
-      assert_text "No videos added! Consider adding some :)"
+        assert_text "No videos added! Consider adding some :)"
+      end
     end
   end
 
@@ -28,15 +30,16 @@ class VideosTest < ApplicationSystemTestCase
     mock_video_service do
       playlist = Playlist.create!(name: "Cat Videos")
 
-      visit root_path
+      assert_changes -> { playlist.reload.name }, from: "Cat Videos", to: "Dog Videos" do
+        visit root_path
 
-      click_on "All Playlist"
-      click_on "Edit"
-      fill_in "Name", with: "Dog Videos"
-      click_button "Update Playlist"
+        click_on "All Playlist"
+        click_on "Edit"
+        fill_in "Name", with: "Dog Videos"
+        click_button "Update Playlist"
 
-      assert_text "No videos added! Consider adding some :)"
-      assert_equal "Dog Videos", playlist.reload.name
+        assert_text "No videos added! Consider adding some :)"
+      end
     end
   end
 end
