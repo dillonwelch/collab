@@ -61,9 +61,10 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
     assert_select "#short_video_123>div", "5 views"
   end
 
-  # test "add to playlist is hidden if there are no playlists" do
-  #   assert_select "#short_video_123>form", false
-  # end
+  test "add to playlist is hidden if there are no playlists" do
+    visit_index(playlist: false)
+    assert_select "#short_video_123>form", false
+  end
 
   test "add to playlist is present if there are playlists" do
     visit_index
