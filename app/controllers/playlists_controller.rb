@@ -23,5 +23,19 @@ class PlaylistsController < ApplicationController
   end
 
   def edit
+    # TODO: Not found
+    @playlist = Playlist.find(params[:id])
+  end
+
+  def update
+    # TODO: Not found
+    @playlist = Playlist.find(params[:id])
+
+    if @playlist.update(name: params[:playlist][:name])
+      redirect_to playlist_path(id: params[:id])
+    else
+      # TODO: render errors
+      render :edit
+    end
   end
 end
