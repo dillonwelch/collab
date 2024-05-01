@@ -10,6 +10,6 @@ class VideoService
   end
 
   def self.get_by_video_id(video_id)
-    get["videos"].find { |hsh| hsh["video_id"] == video_id }
+    get["videos"].find { |hsh| hsh["video_id"] == video_id } || {}
   end
 end
