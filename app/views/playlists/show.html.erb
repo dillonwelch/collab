@@ -1,1 +1,6 @@
 <h1><%= @playlist.name %></h1>
+<h2>Videos</h2>
+<% @playlist.playlist_songs.each do |playlist_song| %>
+  <%= playlist_song.video_id %>
+  <%= playlist_song.position %>
+<% end %>
