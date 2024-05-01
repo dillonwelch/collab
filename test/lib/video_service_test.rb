@@ -53,7 +53,7 @@ class VideoServiceTest < ActiveSupport::TestCase
     end
 
     test "contains the right amount of videos" do
-      assert_equal 92, @result["videos"].length
+      assert_equal 92, @result.length
     end
 
     test "contains the right video information" do
@@ -69,7 +69,7 @@ class VideoServiceTest < ActiveSupport::TestCase
         "created_at" => "2024-04-24T20:59:19.215Z",
         "updated_at" => "2024-04-24T20:59:19.215Z"
       }
-      assert_equal video, @result["videos"].first
+      assert_equal video, @result.first
     end
   end
 

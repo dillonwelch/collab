@@ -3,7 +3,7 @@
   <% playlist_options = options_for_select(@playlists) %>
 
   <div class="row">
-    <% @result["videos"].each do |video| %>
+    <% @result.each do |video| %>
       <div id="<%= video['video_id'] %>" class="col" style="background-color: green; border: 1px solid;">
         <div><%= image_tag(video["thumbnail_url"], alt: "Thumbnail image for video #{video['video_id']}") %></div>
         <div>Title: <%= video["title"] %></div>

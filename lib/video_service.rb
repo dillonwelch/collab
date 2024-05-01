@@ -6,6 +6,7 @@ require "net/http"
 # scan each time we cache busted in order to make sure things were synced. The approach used here would facing scaling
 # issues if the video API returned a large amount of results. In that scenario, it would be prudent to do the extra
 # work to save the data in the database.
+# @note Requires ENV['BASE_API_URL'] to be set.
 class VideoService
   # method => cache_key_name
   CACHE_KEYS = {
@@ -23,17 +24,17 @@ class VideoService
 
   # Returns the JSON parsed data from the Video API. Will iterate through the paginated API until no more results are
   # found. Results are cached. Use VideoService.cache_bust to clear the cache.
-  # @note Requires ENV['BASE_API_URL'] to be set.
+  # @return [Array<Hash>] The list of videos from the Video API.
   def self.get
     Rails.cache.fetch(CACHE_KEYS[__method__]) do
       page = 1
       # TODO: do I need it hashed
-      data = { "videos" => [] }
+      data = []
       while true do
         uri = URI("#{ENV['BASE_API_URL']}/videos?page=#{page}")
         result = JSON.parse(Net::HTTP.get(uri))
         if result["videos"].present?
-          data["videos"] += result["videos"]
+          data += result["videos"]
           page += 1
         else
           # TODO: can calculate this via page size
@@ -44,12 +45,13 @@ class VideoService
     end
   end
 
+  # Returns the JSON parsed data from the Video API for a specific video, based on video_id. Will iterate through the
+  # paginated API until no more results are  found. Results are cached. Use VideoService.cache_bust to clear the cache.
+  # @return [Hash] The JSON data for the video, or an empty array if nothing was found.
+  # @see VideoService.get which is used internally for fetching the data.
   def self.get_by_video_id(video_id)
-    # TODO: enable cache
-    # TODO: docs
-    # TODO: pagination
     Rails.cache.fetch(CACHE_KEYS[__method__]) do
-      get["videos"].each_with_object(Hash.new({})) { |item, hash| hash[item["video_id"]] = item }
+      get.each_with_object(Hash.new({})) { |item, hash| hash[item["video_id"]] = item }
     end[video_id]
   end
 end

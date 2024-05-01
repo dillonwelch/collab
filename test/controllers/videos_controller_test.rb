@@ -2,8 +2,8 @@ require "test_helper"
 
 class VideosControllerTest < ActionDispatch::IntegrationTest
   # TODO: Move to helper?
-  SHORT_VIDEO = MOCKED_DATA["videos"].first
-  LONG_VIDEO = MOCKED_DATA["videos"].second
+  SHORT_VIDEO = MOCKED_DATA.first
+  LONG_VIDEO = MOCKED_DATA.second
 
   # TODO: use setup?
   def visit_index(playlist: true)
