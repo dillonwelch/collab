@@ -4,11 +4,15 @@ require "net/http"
 class PlaylistSongsController < ApplicationController
   def create
     @playlist_song = PlaylistSong.new(playlist_song_params)
+    # @playlist_song.position = 1
+    @playlist_song.save
+    # puts playlist_song_params
+    # puts "valid? #{@playlist_song.valid?}"
   end
 
   private
 
   def playlist_song_params
-    params.permit(:playlist_id, :video_id, :position)
+    params.require(:playlist_song).permit(:playlist_id, :video_id, :position)
   end
 end

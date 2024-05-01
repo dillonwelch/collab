@@ -1,4 +1,7 @@
 <div class="container-fluid">
+  <!--  TODO: controller?-->
+  <% playlist_options = options_for_select(@playlists) %>
+
   <% @result["videos"].each_slice(5) do |videos| %>
     <div class="row">
       <% videos.each do |video| %>
@@ -8,6 +11,11 @@
           <!--          TODO: add ...-->
           <div>Description: <%= video["description"].first(20) %></div>
           <div><%= video["views"] %> views</div>
+          <%= form_with model: PlaylistSong.new do |form| %>
+            <%= form.hidden_field :video_id, value: video["video_id"] %>
+            <%= form.select :playlist_id, playlist_options %>
+            <%= form.submit %>
+          <% end %>
 <!--          TODO: alt text-->
 <!--          TODO: last row does not have 3-->
         </div>
