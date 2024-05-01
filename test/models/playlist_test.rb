@@ -8,9 +8,16 @@ class PlaylistTest < ActiveSupport::TestCase
   end
 
   test "validates uniqueness of name" do
-    Playlist.create(name: "Good test playlist")
+    Playlist.create!(name: "Good test playlist")
     playlist = Playlist.new(name: "Good test playlist")
     playlist.save
     assert_equal playlist.errors.messages[:name], ["has already been taken"]
+  end
+
+  test "has an association to PlaylistSong" do
+    playlist = Playlist.create!(name: "Good test playlist")
+    one = PlaylistSong.create!(playlist: playlist, video_id: "123")
+    two = PlaylistSong.create!(playlist: playlist, video_id: "456")
+    assert_equal playlist.playlist_songs, [one, two]
   end
 end
