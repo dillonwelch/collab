@@ -13,19 +13,24 @@ class PlaylistTest < ActiveSupport::TestCase
   end
 
   test "has an association to PlaylistVideo" do
-    playlist = Playlist.create!(name: "Good test playlist")
-    one = PlaylistVideo.create!(playlist: playlist, video_id: "123")
-    two = PlaylistVideo.create!(playlist: playlist, video_id: "456")
-    assert_equal playlist.playlist_videos, [one, two]
+    mock_video_service do
+      playlist = Playlist.create!(name: "Good test playlist")
+      one = PlaylistVideo.create!(playlist: playlist, video_id:  short_video["video_id"])
+      two = PlaylistVideo.create!(playlist: playlist, video_id:  long_video["video_id"])
+
+      assert_equal playlist.playlist_videos, [one, two]
+    end
   end
 
   test "destroys associated PlaylistVideos upon destruction" do
-    playlist = Playlist.create!(name: "Good test playlist")
-    one = PlaylistVideo.create!(playlist: playlist, video_id: "123")
-    two = PlaylistVideo.create!(playlist: playlist, video_id: "456")
+    mock_video_service do
+      playlist = Playlist.create!(name: "Good test playlist")
+      one = PlaylistVideo.create!(playlist: playlist, video_id:  short_video["video_id"])
+      two = PlaylistVideo.create!(playlist: playlist, video_id:  long_video["video_id"])
 
-    assert_changes -> { PlaylistVideo.count }, from: 2, to: 0 do
-      playlist.destroy!
+      assert_changes -> { PlaylistVideo.count }, from: 2, to: 0 do
+        playlist.destroy!
+      end
     end
   end
 end
