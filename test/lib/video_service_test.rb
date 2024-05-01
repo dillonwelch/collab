@@ -32,7 +32,9 @@ class VideoServiceTest < ActiveSupport::TestCase
     setup do
       # TODO: Mock API call
       # TODO: test caching
-      @result = VideoService.get
+      VCR.use_cassette "lib/video_service/get", allow_unused_http_interactions: false do
+        @result = VideoService.get
+      end
     end
 
     test "contains the right amount of videos" do
@@ -70,11 +72,15 @@ class VideoServiceTest < ActiveSupport::TestCase
         "created_at" => "2024-04-24T20:59:19.215Z",
         "updated_at" => "2024-04-24T20:59:19.215Z"
       }
-      assert_equal video, VideoService.get_by_video_id(video["video_id"])
+      VCR.use_cassette "lib/video_service/get", allow_unused_http_interactions: false do
+        assert_equal video, VideoService.get_by_video_id(video["video_id"])
+      end
     end
 
     test "returns {} if the video was not found" do
-      assert_equal({}, VideoService.get_by_video_id("not a valid video ID"))
+      VCR.use_cassette "lib/video_service/get", allow_unused_http_interactions: false do
+        assert_equal({}, VideoService.get_by_video_id("not a valid video ID"))
+      end
     end
   end
 end
