@@ -24,8 +24,10 @@ class VideoService
 
   # Returns the JSON parsed data from the Video API. Will iterate through the paginated API until no more results are
   # found. Results are cached. Use VideoService.cache_bust to clear the cache.
+  # @param api_page_size [Integer] The page size of the results that come back from the Video API. Defaults to 20 based
+  #   on test API used during development.
   # @return [Array<Hash>] The list of videos from the Video API.
-  def self.get
+  def self.get(api_page_size: 20)
     Rails.cache.fetch(CACHE_KEYS[__method__]) do
       page = 1
       data = []
@@ -34,7 +36,7 @@ class VideoService
         result = JSON.parse(Net::HTTP.get(uri))
         data += result["videos"]
         page += 1
-        break if result["videos"].length < 20
+        break if result["videos"].length < api_page_size
       end
       data
     end
