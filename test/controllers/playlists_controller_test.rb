@@ -1,6 +1,8 @@
 require "test_helper"
 
 class PlaylistsControllerTest < ActionDispatch::IntegrationTest
+  # TODO: standardize verbiage across test names
+  # TODO: Use response body instead of assert_select
   # TODO: Test header links after UI is finalized
   # TODO: Test playlist links after UI is finalized
   class PlaylistsControllerIndexTest < PlaylistsControllerTest
@@ -126,16 +128,20 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
   class PlaylistsControllerUpdateTest < PlaylistsControllerTest
     test "request with valid params updates the playlist" do
       playlist = Playlist.create!(name: "Cat Videos")
-      patch playlist_path(playlist), params: { playlist: { name: "Dog Videos" } }
+
+      assert_changes -> { playlist.reload.name }, from: "Cat Videos", to: "Dog Videos" do
+        patch playlist_path(playlist), params: { playlist: { name: "Dog Videos" } }
+      end
       assert_redirected_to playlist_path(playlist)
     end
 
-    # TODO: standardize verbiage across test names
     test "request with a duplicated name does not update the playlist" do
       playlist = Playlist.create!(name: "Cat Videos")
-      playlist2 = Playlist.create!(name: "Dog Videos")
+      Playlist.create!(name: "Dog Videos")
 
-      patch playlist_path(playlist), params: { playlist: { name: "Dog Videos" } }
+      assert_no_changes -> { playlist.reload.name } do
+        patch playlist_path(playlist), params: { playlist: { name: "Dog Videos" } }
+      end
 
       assert_match "Name has already been taken", @response.body
     end
@@ -143,9 +149,23 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     test "request with an empty name does not update the playlist" do
       playlist = Playlist.create!(name: "Cat Videos")
 
-      patch playlist_path(playlist), params: { playlist: { name: "" } }
+      assert_no_changes -> { playlist.reload.name } do
+        patch playlist_path(playlist), params: { playlist: { name: "" } }
+      end
 
       assert_match "Name can&#39;t be blank", @response.body
+    end
+  end
+
+  class PlaylistsControllerDestroyTest < PlaylistsControllerTest
+    test "request destroys the playlist" do
+      playlist = Playlist.create!(name: "Cat Videos")
+
+      assert_difference -> { Playlist.where(name: "Cat Videos").count }, -1 do
+        delete playlist_path(playlist)
+      end
+
+      assert_redirected_to playlists_path
     end
   end
 end
