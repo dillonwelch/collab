@@ -4,12 +4,19 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
   mocked_data = {
     "videos" => [
       {
-        "video_id" => "H1tQhK0n5Qk",
+        "video_id" => "short_video_123",
         "thumbnail_url" => "https://i.ytimg.com/vi/H1tQhK0n5Qk/default.jpg",
-        "description" => "#shorts",
-        "title" => "thanks for 5 million",
-        "views" => 279357
-      }
+        "description" => "Test Description",
+        "title" => "Test Title",
+        "views" => 5
+      },
+      {
+        "video_id" => "long_video_123",
+        "thumbnail_url" => "https://i.ytimg.com/vi/H1tQhK0n5Qk/default.jpg",
+        "description" => "meow" * 10,
+        "title" => "Long Video Test Title",
+        "views" => 5
+      },
     ]
   }
 
@@ -25,21 +32,25 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
 
   test "video image thumbnail is displayed" do
     assert_select(
-      "#H1tQhK0n5Qk>div",
-      html: '<img alt="Thumbnail image for video H1tQhK0n5Qk" src="https://i.ytimg.com/vi/H1tQhK0n5Qk/default.jpg">'
+      "#short_video_123>div",
+      html: '<img alt="Thumbnail image for video short_video_123" src="https://i.ytimg.com/vi/H1tQhK0n5Qk/default.jpg">'
     )
   end
 
   test "video title is displayed" do
-    assert_select "#H1tQhK0n5Qk>div", "Title: thanks for 5 million"
+    assert_select "#short_video_123>div", "Title: Test Title"
   end
 
-  # TODO: test long description
   test "video description is displayed" do
-    assert_select "#H1tQhK0n5Qk>div", "Description: #shorts"
+    assert_select "#short_video_123>div", "Description: Test Description"
+  end
+
+  test "video description is truncated when long" do
+    # TODO: test long description with ...
+    assert_select "#long_video_123>div", "Description: meowmeowmeowmeowmeow"
   end
 
   test "video views are displayed" do
-    assert_select "#H1tQhK0n5Qk>div", "279357 views"
+    assert_select "#short_video_123>div", "5 views"
   end
 end
