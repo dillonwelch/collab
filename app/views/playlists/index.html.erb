@@ -1,17 +1,21 @@
 <h1>Playlists</h1>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Actions</th>
-  </tr>
-  <% @playlists.each do |playlist| %>
+<% if @playlists.empty? %>
+  <div>No playlists! Consider making one :)</div>
+<% else  %>
+  <table>
     <tr>
-      <td><%= playlist.name %></td>
-      <td>
-        <%= link_to("Edit", edit_playlist_path(playlist.id)) %>
-        <%= link_to("View", playlist_path(playlist.id)) %>
-        <%= link_to("Delete", playlist_path(playlist.id), data: { turbo_method: :delete }) %>
-      </td>
+      <th>Name</th>
+      <th>Actions</th>
     </tr>
-  <% end %>
-</table>
+    <% @playlists.each do |playlist| %>
+      <tr>
+        <td><%= playlist.name %></td>
+        <td>
+          <%= link_to("Edit", edit_playlist_path(playlist.id)) %>
+          <%= link_to("View", playlist_path(playlist.id)) %>
+          <%= link_to("Delete", playlist_path(playlist.id), data: { turbo_method: :delete }) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

@@ -8,7 +8,8 @@ class PlaylistVideo < ApplicationRecord
   validates :video_id, presence: true
   # validates :position, presence: true
 
+  # TODO: error handling
   def video
-    VideoService.get_by_video_id(video_id)
+    VideoService.get_by_video_id(video_id) || {}
   end
 end

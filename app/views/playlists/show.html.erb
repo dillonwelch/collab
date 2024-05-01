@@ -1,10 +1,14 @@
 <h1><%= @playlist.name %></h1>
 <!--TODO: no videos-->
-<h2>Videos</h2>
-<% @playlist.playlist_videos.each do |playlist_video| %>
-  <div>
-    ID: <%= playlist_video.video_id %>
-    Position: <%= playlist_video.position %>
-    Title: <%= playlist_video.video["title"] %>
-  </div>
+<% if @playlist.playlist_videos.empty? %>
+  <div>No videos added! Consider adding some :)</div>
+<% else  %>
+  <h2>Videos</h2>
+  <% @playlist.playlist_videos.each do |playlist_video| %>
+    <div>
+      ID: <%= playlist_video.video_id %>
+      Position: <%= playlist_video.position %>
+      Title: <%= playlist_video.video["title"] %>
+    </div>
+  <% end %>
 <% end %>

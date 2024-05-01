@@ -1,6 +1,7 @@
 require "test_helper"
 
 class VideosControllerTest < ActionDispatch::IntegrationTest
+  # TODO: extract?
   MOCKED_DATA = {
     "videos" => [
       {
@@ -22,6 +23,7 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
   SHORT_VIDEO = MOCKED_DATA["videos"].first
   LONG_VIDEO = MOCKED_DATA["videos"].second
 
+  # TODO: use setup?
   def visit_index(playlist: true)
     VideoService.stub :get, MOCKED_DATA do
       Playlist.create!(name: "Good Playlist") if playlist

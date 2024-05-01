@@ -1,10 +1,10 @@
 class PlaylistsController < ApplicationController
   def index
+    # TODO: Paginate?
     @playlists = Playlist.all
   end
 
   def show
-    # TODO: Not found
     @playlist = Playlist.find(params[:id])
   end
 
