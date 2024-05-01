@@ -4,6 +4,8 @@ class PlaylistsController < ApplicationController
   end
 
   def show
+    # TODO: Not found
+    @playlist = Playlist.find(params[:id])
   end
 
   def new
