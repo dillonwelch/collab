@@ -1,9 +1,7 @@
 # A helper for mocking out VideoService results.
 module VideoServiceHelper
-  # TODO: document
-  # TODO: extract from other places to here
-  # TODO: not a constant?
-
+  # JSON data for a video with a short description.
+  # @return [Hash] Video data.
   def short_video
     {
       "video_id" => "short_video_123",
@@ -14,6 +12,8 @@ module VideoServiceHelper
     }
   end
 
+  # JSON data for a video with a large description.
+  # @return [Hash] Video data.
   def long_video
     {
       "video_id" => "long_video_123",
@@ -24,7 +24,8 @@ module VideoServiceHelper
     }
   end
 
-  # Stubs the result of VideoService.get using mocked data
+  # Stubs the result of VideoService.get using mocked data.
+  # @yield [nil] Wraps the yield within a stub call.
   def mock_video_service
     VideoService.stub :get, [short_video, long_video] do
       yield
