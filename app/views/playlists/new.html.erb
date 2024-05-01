@@ -1,6 +1,2 @@
 <h1>Create Playlist</h1>
-<%= form_with model: @playlist do |form| %>
-  <%= form.label :name %>
-  <%= form.text_field :name %>
-  <%= form.submit %>
-<% end %>
+<%= render "form", playlist: @playlist %>
