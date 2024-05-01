@@ -7,8 +7,7 @@
   <% @playlists.each do |playlist| %>
     <tr>
       <td><%= playlist.name %></td>
-      <td><%= link_to("Edit", edit_playlist_path(playlist.id)) %></td>
-      <td><%= link_to("View", playlist_path(playlist.id)) %></td>
+      <td><%= link_to("Edit", edit_playlist_path(playlist.id)) %> <%= link_to("View", playlist_path(playlist.id)) %></td>
     </tr>
   <% end %>
 </table>
