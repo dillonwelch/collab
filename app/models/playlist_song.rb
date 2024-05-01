@@ -5,6 +5,9 @@ class PlaylistSong < ApplicationRecord
     self.position = (playlist.playlist_songs.maximum(:position) || 0) + 1
   end
 
+  validates :video_id, presence: true
+  # validates :position, presence: true
+
   def video
     VideoService.get_by_video_id(video_id)
   end
