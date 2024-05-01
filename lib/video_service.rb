@@ -18,7 +18,7 @@ class VideoService
     # TODO: docs
     # TODO: pagination
     Rails.cache.fetch("video_service_get_by_video_id") do
-      get["videos"].map { |hsh| [hsh["video_id"], hsh] }.to_h
-    end.fetch(video_id, {})
+      get["videos"].each_with_object(Hash.new({})) { |item, hash| hash[item["video_id"]] = item }
+    end[video_id]
   end
 end
