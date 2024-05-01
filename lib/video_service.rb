@@ -28,18 +28,13 @@ class VideoService
   def self.get
     Rails.cache.fetch(CACHE_KEYS[__method__]) do
       page = 1
-      # TODO: do I need it hashed
       data = []
       while true do
         uri = URI("#{ENV['BASE_API_URL']}/videos?page=#{page}")
         result = JSON.parse(Net::HTTP.get(uri))
-        if result["videos"].present?
-          data += result["videos"]
-          page += 1
-        else
-          # TODO: can calculate this via page size
-          break
-        end
+        data += result["videos"]
+        page += 1
+        break if result["videos"].length < 20
       end
       data
     end

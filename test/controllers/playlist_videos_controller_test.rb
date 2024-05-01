@@ -6,8 +6,10 @@ class PlaylistVideosControllerTest < ActionDispatch::IntegrationTest
       playlist = Playlist.create!(name: "Cat Videos")
 
       assert_changes -> { playlist.playlist_videos.count }, 1 do
-        # TODO: get ID from helper
-        post playlist_videos_path, params: { playlist_video: { playlist_id: playlist.id, video_id: "short_video_id" } }
+        post(
+          playlist_videos_path,
+          params: { playlist_video: { playlist_id: playlist.id, video_id: short_video["video_id"] } }
+        )
       end
 
       assert_response :no_content
@@ -19,8 +21,7 @@ class PlaylistVideosControllerTest < ActionDispatch::IntegrationTest
       playlist = Playlist.create!(name: "Cat Videos")
 
       assert_no_changes -> { playlist.playlist_videos.count } do
-        # TODO: get ID from helper
-        post playlist_videos_path, params: { playlist_video: { playlist_id: 0, video_id: "short_video_id" } }
+        post playlist_videos_path, params: { playlist_video: { playlist_id: 0, video_id: short_video["video_id"] } }
       end
 
       assert_response :unprocessable_entity
