@@ -33,14 +33,16 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     end
 
     test "request with a valid ID and videos displays the playlist info and video info" do
-      playlist = Playlist.create!(name: "Cat Videos")
-      PlaylistVideo.create!(playlist: playlist, video_id: "short_video_123")
+      mock_video_service do
+        playlist = Playlist.create!(name: "Cat Videos")
+        PlaylistVideo.create!(playlist: playlist, video_id: "short_video_123")
 
-      mock_video_service { get playlist_path(playlist.id) }
+        get playlist_path(playlist.id)
 
-      assert_response :success
-      assert_match "Cat Videos", @response.body
-      assert_match "ID: short_video_123", @response.body
+        assert_response :success
+        assert_match "Cat Videos", @response.body
+        assert_match "ID: short_video_123", @response.body
+      end
     end
 
     test "request with an invalid ID is unsuccessful" do
