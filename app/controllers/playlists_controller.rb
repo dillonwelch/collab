@@ -16,6 +16,7 @@ class PlaylistsController < ApplicationController
     @playlist = Playlist.new(playlist_params)
 
     if @playlist.save
+      # TODO: render success alert?
       redirect_to @playlist
     else
       # TODO: render errors
@@ -35,6 +36,7 @@ class PlaylistsController < ApplicationController
     @playlist = Playlist.find(params[:id])
 
     if @playlist.update(name: params[:playlist][:name])
+      # TODO: render success alert
       redirect_to @playlist
     else
       # TODO: render errors

@@ -1,15 +1,14 @@
 require "test_helper"
 
 class VideosControllerTest < ActionDispatch::IntegrationTest
+  # TODO: Move to helper?
   SHORT_VIDEO = MOCKED_DATA["videos"].first
   LONG_VIDEO = MOCKED_DATA["videos"].second
 
   # TODO: use setup?
   def visit_index(playlist: true)
     Playlist.create!(name: "Good Playlist") if playlist
-    VideoService.stub :get, MOCKED_DATA do
-      get root_path
-    end
+    mock_video_service { get root_path }
   end
 
   test "index response should be a success" do

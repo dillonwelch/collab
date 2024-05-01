@@ -1,7 +1,8 @@
 require "test_helper"
 
 class PlaylistsControllerTest < ActionDispatch::IntegrationTest
-  # TODO: Test header links?
+  # TODO: Test header links after UI is finalized
+  # TODO: Test playlist links after UI is finalized
   class PlaylistsControllerIndexTest < PlaylistsControllerTest
     test "request with no playlists is successful" do
       get playlists_path
@@ -19,7 +20,6 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
 
-    # TODO: Test links after UI is finalized
     test "request with playlists displays playlist information" do
       Playlist.create!(name: "Cat Videos")
       get playlists_path
@@ -72,6 +72,33 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     test "request with an invalid ID is unsuccessful" do
       get playlist_path(0)
       assert_response :not_found
+    end
+  end
+
+  class PlaylistsControllerNewTest < PlaylistsControllerTest
+    test "request is successful" do
+      get new_playlist_path
+      assert_response :success
+    end
+
+    test "request displays the right text" do
+      get new_playlist_path
+      # TODO: Update after UI finalized
+      assert_select "body", /Create Playlist/
+    end
+  end
+
+  class PlaylistsControllerCreateTest < PlaylistsControllerTest
+    test "request creates a new playlist with valid params" do
+      assert_difference -> { Playlist.where(name: "Cat Videos").count }, 1 do
+        post playlists_path, params: { playlist: { name: "Cat Videos" } }
+      end
+    end
+
+    test "request redirects to the playlist show page with valid params" do
+      post playlists_path, params: { playlist: { name: "Cat Videos" } }
+
+      assert_redirected_to playlist_path(Playlist.last)
     end
   end
 end

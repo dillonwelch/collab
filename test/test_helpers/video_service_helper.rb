@@ -1,6 +1,7 @@
 module VideoServiceHelper
   # TODO: document
-  # TODO: extract?
+  # TODO: extract from other places to here
+  # TODO: not a constant?
   MOCKED_DATA = {
     "videos" => [
       {
