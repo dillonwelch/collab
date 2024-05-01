@@ -19,6 +19,7 @@ class VideoService
     # TODO: pagination
     Rails.cache.fetch(CACHE_KEYS[__method__]) do
       page = 1
+      # TODO: do I need it hashed
       data = { "videos" => [] }
       while true do
         uri = URI("#{ENV['BASE_API_URL']}/videos?page=#{page}")

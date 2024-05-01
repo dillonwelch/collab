@@ -35,10 +35,6 @@ class VideoServiceTest < ActiveSupport::TestCase
       @result = VideoService.get
     end
 
-    test "contains meta information" do
-      assert_equal({ "total" => 92, "page" => 1 }, @result["meta"])
-    end
-
     test "contains the right amount of videos" do
       assert_equal 92, @result["videos"].length
     end

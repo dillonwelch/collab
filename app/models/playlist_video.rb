@@ -6,10 +6,11 @@ class PlaylistVideo < ApplicationRecord
   end
 
   validates :video_id, presence: true
+
   # TODO: how to do validation with edits
   # validates :position, presence: true
 
-  # TODO: error handling
+  # TODO: docs
   def video
     VideoService.get_by_video_id(video_id)
   end
