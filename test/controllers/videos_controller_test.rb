@@ -1,32 +1,13 @@
 require "test_helper"
 
 class VideosControllerTest < ActionDispatch::IntegrationTest
-  # TODO: extract?
-  MOCKED_DATA = {
-    "videos" => [
-      {
-        "video_id" => "short_video_123",
-        "thumbnail_url" => "https://i.ytimg.com/vi/H1tQhK0n5Qk/default.jpg",
-        "description" => "Test Description",
-        "title" => "Test Title",
-        "views" => 5
-      },
-      {
-        "video_id" => "long_video_123",
-        "thumbnail_url" => "https://i.ytimg.com/vi/H1tQhK0n5Qk/default.jpg",
-        "description" => "meow" * 10,
-        "title" => "Long Video Test Title",
-        "views" => 6
-      },
-    ]
-  }
   SHORT_VIDEO = MOCKED_DATA["videos"].first
   LONG_VIDEO = MOCKED_DATA["videos"].second
 
   # TODO: use setup?
   def visit_index(playlist: true)
+    Playlist.create!(name: "Good Playlist") if playlist
     VideoService.stub :get, MOCKED_DATA do
-      Playlist.create!(name: "Good Playlist") if playlist
       get root_path
     end
   end
