@@ -1,1 +1,16 @@
-<%= @result %>
+<table>
+  <tr>
+    <th>Thumbnail</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>View Count</th>
+  </tr>
+  <% @result["videos"].each do |video| %>
+    <tr>
+      <td><img src="<%= video["thumbnail_url"] %>" </td>
+      <td><%= video["title"] %></td>
+      <td><%= video["description"] %></td>
+      <td><%= video["views"] %></td>
+    </tr>
+  <% end %>
+</table>
