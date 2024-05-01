@@ -38,7 +38,7 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
     visit_index
     assert_select(
       "##{SHORT_VIDEO['video_id']}>div",
-      html: '<img alt="Thumbnail image for video short_video_123" src="https://i.ytimg.com/vi/H1tQhK0n5Qk/default.jpg">'
+      html: "<img alt=\"Thumbnail image for video #{SHORT_VIDEO['video_id']}\" src=\"https://i.ytimg.com/vi/H1tQhK0n5Qk/default.jpg\">"
     )
   end
 
