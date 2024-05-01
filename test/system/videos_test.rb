@@ -52,7 +52,7 @@ class VideosTest < ApplicationSystemTestCase
       click_on "All Playlists"
       click_on "View"
 
-      assert_text short_video["name"]
+      assert_text "Cat Videos"
     end
   end
 
