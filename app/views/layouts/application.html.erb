@@ -11,9 +11,16 @@
   </head>
 
   <body>
-    <a href="/">All Videos</a>
-    <a href="/playlists">All Playlists</a>
-    <a href="/playlists/new">Create Playlist</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">YouToob</a>
+        <div class="navbar-nav">
+          <%= header_item("All Videos", "/") %>
+          <%= header_item("All Playlists", playlists_path) %>
+          <%= header_item("Create Playlist", new_playlist_path) %>
+        </div>
+      </div>
+    </nav>
     <%= yield %>
   </body>
 </html>

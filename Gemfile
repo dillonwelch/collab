@@ -67,3 +67,6 @@ group :test do
 end
 
 gem "dotenv"
+
+gem "bootstrap"
+gem "sassc-rails"
