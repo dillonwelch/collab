@@ -2,6 +2,7 @@
   <!--  TODO: controller?-->
   <% playlist_options = options_for_select(@playlists) %>
 
+<!--  TODO: col-* to figure this out?-->
   <% @result["videos"].each_slice(5) do |videos| %>
     <div class="row">
       <% videos.each do |video| %>

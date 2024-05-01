@@ -1,7 +1,10 @@
 <h1><%= @playlist.name %></h1>
+<!--TODO: no videos-->
 <h2>Videos</h2>
 <% @playlist.playlist_songs.each do |playlist_song| %>
-  <%= playlist_song.video_id %>
-  <%= playlist_song.position %>
-  <%= playlist_song.video %>
+  <div>
+    ID: <%= playlist_song.video_id %>
+    Position: <%= playlist_song.position %>
+    Title: <%= playlist_song.video["title"] %>
+  </div>
 <% end %>
