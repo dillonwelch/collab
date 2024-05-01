@@ -132,6 +132,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
       assert_changes -> { playlist.reload.name }, from: "Cat Videos", to: "Dog Videos" do
         patch playlist_path(playlist), params: { playlist: { name: "Dog Videos" } }
       end
+
       assert_redirected_to playlist_path(playlist)
     end
 
