@@ -3,6 +3,31 @@
 require "test_helper"
 
 class VideoServiceTest < ActiveSupport::TestCase
+  setup do
+    @original_cache = Rails.cache
+    Rails.cache = ActiveSupport::Cache::MemoryStore.new
+  end
+
+  teardown do
+    Rails.cache.clear
+    Rails.cache = @original_cache
+  end
+
+  class VideoServiceCacheBustTest < VideoServiceTest
+    test "clears the relevant caches" do
+      VideoService::CACHE_KEYS.values.each do |key|
+        Rails.cache.write(key, "meow")
+        assert_equal "meow", Rails.cache.read(key)
+      end
+
+      VideoService.cache_bust
+
+      VideoService::CACHE_KEYS.values.each do |key|
+        assert_nil Rails.cache.read(key)
+      end
+    end
+  end
+
   class VideoServiceGetTest < VideoServiceTest
     setup do
       # TODO: Mock API call
