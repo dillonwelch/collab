@@ -66,7 +66,8 @@ group :test do
   gem "selenium-webdriver"
 end
 
+# TODO: docs
+# TODO: rubocop
 gem "dotenv"
-
 gem "bootstrap"
 gem "sassc-rails"

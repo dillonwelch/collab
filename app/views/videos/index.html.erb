@@ -15,7 +15,7 @@
           <%= form_with model: PlaylistSong.new do |form| %>
             <%= form.hidden_field :video_id, value: video["video_id"] %>
             <%= form.select :playlist_id, playlist_options %>
-            <%= form.submit %>
+            <%= form.submit "Add to playlist"%>
           <% end %>
 <!--          TODO: alt text-->
 <!--          TODO: last row does not have 3-->
