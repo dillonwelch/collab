@@ -1,15 +1,15 @@
-<div class="container-fluid">
+<div class="container">
   <!--  TODO: controller?-->
   <% playlist_options = options_for_select(@playlists) %>
 
-  <div class="row">
+  <div class="row video-column">
     <% @result.each do |video| %>
-      <div id="<%= video['video_id'] %>" class="col" style="background-color: green; border: 1px solid;">
+      <div id="<%= video['video_id'] %>" class="col-md-3 video-card" >
         <div><%= image_tag(video["thumbnail_url"], alt: "Thumbnail image for video #{video['video_id']}") %></div>
-        <div>Title: <%= video["title"] %></div>
+        <div class="title"><%= video["title"] %></div>
         <!--          TODO: add ...-->
         <!--          TODO: nil description ...-->
-        <div>Description: <%= video["description"]&.first(20) %></div>
+        <div><%= video["description"]&.first(100) %></div>
         <div><%= video["views"] %> views</div>
         <% unless playlist_options.empty? %>
           <%= form_with model: PlaylistVideo.new do |form| %>

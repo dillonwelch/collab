@@ -15,3 +15,31 @@
  */
 
 @import "bootstrap";
+
+.video-column {
+  //margin: auto;
+  //border: 3px solid green;
+  //padding: 10px;
+}
+
+.video-card {
+  margin: 0.7em;
+  padding: 1em;
+  border-radius: 25px;
+  transition: 0.3s;
+  text-align: center;
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+  }
+  &:hover {
+    background-color: lightgreen;
+  }
+}
+
+.title {
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
