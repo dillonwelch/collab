@@ -20,7 +20,7 @@ class PlaylistVideosController < ApplicationController
     redirect_to playlist_path(playlist_id), status: :see_other, notice: "Playlist entry successfully deleted."
   end
 
-  # TODO: Edit and reorder on UI
+  # TODO: Reorder on UI
   def swap
     from_video = PlaylistVideo.find(params[:from_id])
     from_position = from_video.position

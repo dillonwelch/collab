@@ -34,10 +34,13 @@ class PlaylistVideosControllerTest < ActionDispatch::IntegrationTest
     test "request destroys the playlist video" do
       mock_video_service do
         playlist = Playlist.create!(name: "Cat Videos")
-        video = PlaylistVideo.create!(playlist: playlist, video_id: short_video["video_id"])
+        PlaylistVideo.create!(playlist: playlist, video_id: short_video["video_id"])
+        video = PlaylistVideo.create!(playlist: playlist, video_id: long_video["video_id"])
 
-        assert_difference -> { PlaylistVideo.where(playlist: playlist).count }, -1 do
-          delete playlist_video_path(playlist)
+        assert_changes -> { video.reload.position }, from: 2, to: 1 do
+          assert_difference -> { PlaylistVideo.where(playlist: playlist).count }, -1 do
+            delete playlist_video_path(playlist)
+          end
         end
 
         assert_redirected_to playlist_path(playlist)

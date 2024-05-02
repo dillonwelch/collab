@@ -5,14 +5,10 @@ class PlaylistVideo < ApplicationRecord
     self.position = (playlist.playlist_videos.maximum(:position) || 0) + 1
   end
 
-  # TODO: Validate existence.
   validates :video_id, presence: true
   validate :video_id_exists
 
   validates :position, numericality: { only_integer: true, greater_than: 0, allow_nil: true }
-
-  # TODO: recalculate positions
-  # TODO: uniquness of position scoped to id
 
   # Fetches the JSON video information for the video ID assigned to the record.
   # @return [Hash] JSON video information.
