@@ -2,20 +2,34 @@
 <% if @playlists.empty? %>
   <div>No playlists! Consider making one :)</div>
 <% else  %>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Actions</th>
-    </tr>
-    <% @playlists.each do |playlist| %>
-      <tr>
-        <td><%= playlist.name %></td>
-        <td>
-          <%= link_to("Edit", edit_playlist_path(playlist.id)) %>
-          <%= link_to("View", playlist_path(playlist.id)) %>
-          <%= link_to("Delete", playlist_path(playlist.id), data: { turbo_method: :delete }) %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <% @playlists.each do |playlist| %>
+          <div class="col" >
+            <div class="card video-card shadow-sm">
+              <div class="card-body">
+                <p class="card-text name"><%= playlist.name %></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <%= link_to(edit_playlist_path(playlist.id)) do %>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <% end %>
+
+                    <%= link_to(playlist_path(playlist.id)) do %>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                    <% end %>
+
+                    <%= link_to(playlist_path(playlist.id), data: { turbo_method: :delete }) do %>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 <% end %>
