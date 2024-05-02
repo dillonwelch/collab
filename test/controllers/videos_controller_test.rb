@@ -11,11 +11,12 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
+    # This is gnarly but I can't figure out a better way
+    assert_select(
+        "##{short_video['video_id']}>div",
+        html: /<img alt=\"Thumbnail image for video #{short_video['video_id']}\" src=\"#{short_video['thumbnail_url']}\">/
+    )
     assert_select "##{short_video['video_id']}>div" do
-      # assert_select(
-      #   "##{short_video['video_id']}>div",
-      #   html: "<img alt=\"Thumbnail image for video #{short_video['video_id']}\" src=\"#{short_video['thumbnail_url']}\">"
-      # )
       assert_select ".title", "#{short_video['title']}"
       assert_select ".description", "#{short_video['description']}"
       assert_select ".views", "#{short_video['views']} views"
@@ -32,11 +33,15 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
 
   test "add to playlist is hidden if there are no playlists" do
     visit_index(playlist: false)
-    assert_select "##{short_video['video_id']}>form", false
+    assert_select "##{short_video['video_id']}" do
+      assert_select "form", false
+    end
   end
 
   test "add to playlist is present if there are playlists" do
     visit_index
-    assert_select "##{short_video['video_id']}>form", "Good Playlist"
+    assert_select "##{short_video['video_id']}" do
+      assert_select "form", "Good Playlist"
+    end
   end
 end
