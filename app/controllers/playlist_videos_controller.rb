@@ -7,6 +7,8 @@ class PlaylistVideosController < ApplicationController
     @playlist_video.save!
   end
 
+  # TODO: Edit and reorder
+
   private
 
   def playlist_video_params

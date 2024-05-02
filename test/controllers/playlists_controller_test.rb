@@ -1,7 +1,6 @@
 require "test_helper"
 
 class PlaylistsControllerTest < ActionDispatch::IntegrationTest
-  # TODO: Test header links after UI is finalized
   # TODO: Test playlist links after UI is finalized
   class PlaylistsControllerIndexTest < PlaylistsControllerTest
     test "request with no playlists displays a 'No Playlists' message" do
@@ -68,6 +67,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
       end
 
       assert_redirected_to playlist_path(Playlist.last)
+      assert_match "Playlist \"Cat Videos\" successfully created.", flash[:notice]
     end
 
     test "request with a duplicated name does not create a new playlist" do
@@ -110,6 +110,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
       end
 
       assert_redirected_to playlist_path(playlist)
+      assert_match "Playlist \"Dog Videos\" successfully updated.", flash[:notice]
     end
 
     test "request with a duplicated name does not update the playlist" do
@@ -143,6 +144,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
       end
 
       assert_redirected_to playlists_path
+      assert_match "Playlist \"Cat Videos\" successfully deleted.", flash[:notice]
     end
   end
 end

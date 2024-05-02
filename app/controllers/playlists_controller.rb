@@ -2,6 +2,8 @@ class PlaylistsController < ApplicationController
   def index
     # TODO: Paginate?
     @playlists = Playlist.all
+    # flash[:alert] = "hey!"
+    # flash[:notice] = "wow"
   end
 
   def show
@@ -16,28 +18,22 @@ class PlaylistsController < ApplicationController
     @playlist = Playlist.new(playlist_params)
 
     if @playlist.save
-      # TODO: render success alert?
-      redirect_to @playlist
+      redirect_to @playlist, notice: "Playlist \"#{@playlist.name}\" successfully created."
     else
       # TODO: render errors
-      # TODO: properly handle uniqueness errors
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    # TODO: Not found
-    # TODO: User shared form
     @playlist = Playlist.find(params[:id])
   end
 
   def update
-    # TODO: Not found
     @playlist = Playlist.find(params[:id])
 
     if @playlist.update(name: params[:playlist][:name])
-      # TODO: render success alert
-      redirect_to @playlist
+      redirect_to @playlist, notice: "Playlist \"#{@playlist.name}\" successfully updated."
     else
       # TODO: render errors
       render :edit, status: :unprocessable_entity
@@ -48,8 +44,7 @@ class PlaylistsController < ApplicationController
     @playlist = Playlist.find(params[:id])
     @playlist.destroy
 
-    # TODO: Display note
-    redirect_to playlists_path, status: :see_other
+    redirect_to playlists_path, status: :see_other, notice: "Playlist \"#{@playlist.name}\" successfully deleted."
   end
 
   private

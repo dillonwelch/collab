@@ -21,6 +21,11 @@
         </div>
       </div>
     </nav>
+    <% flash.each do |type, msg| %>
+      <div class="alert alert-<%= flash_mapper(type) %>">
+        <%= msg %>
+      </div>
+    <% end %>
     <main>
       <%= yield %>
     </main>
