@@ -1,8 +1,6 @@
 <div class="album py-5 bg-body-tertiary">
   <div class="container">
-    <!--  TODO: controller?-->
     <% playlist_options = options_for_select(@playlists) %>
-
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
       <% @result.each do |video| %>
         <div id="<%= video['video_id'] %>" class="col">
