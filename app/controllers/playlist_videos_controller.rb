@@ -2,13 +2,12 @@ require "net/http"
 
 class PlaylistVideosController < ApplicationController
   def create
-    # TODO: proper error response
     # TODO: flash messages
-    @playlist_video = PlaylistVideo.new(playlist_video_params)
-    @playlist_video.save!
+    playlist_video = PlaylistVideo.new(playlist_video_params)
+    playlist_video.save!
   end
 
-  # TODO: test
+  # TODO: System test
   def destroy
     playlist_video = PlaylistVideo.find(params[:id])
     playlist_id = playlist_video.playlist_id
@@ -30,6 +29,8 @@ class PlaylistVideosController < ApplicationController
 
     from_video.update!(position: to_position)
     to_video.update!(position: from_position)
+
+    head :ok
   end
 
   private

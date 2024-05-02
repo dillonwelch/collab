@@ -30,6 +30,22 @@ class PlaylistVideosControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  class PlaylistVideosControllerDestroyTest < PlaylistVideosControllerTest
+    test "request destroys the playlist video" do
+      mock_video_service do
+        playlist = Playlist.create!(name: "Cat Videos")
+        video = PlaylistVideo.create!(playlist: playlist, video_id: short_video["video_id"])
+
+        assert_difference -> { PlaylistVideo.where(playlist: playlist).count }, -1 do
+          delete playlist_video_path(playlist)
+        end
+
+        assert_redirected_to playlist_path(playlist)
+        assert_match "Playlist entry successfully deleted.", flash[:notice]
+      end
+    end
+  end
+
   class PlaylistVideosControllerSwapTest < PlaylistVideosControllerTest
     test"swaps the position of two playlist videos" do
       mock_video_service do
