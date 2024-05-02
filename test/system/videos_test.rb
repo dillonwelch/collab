@@ -77,8 +77,10 @@ class VideosTest < ApplicationSystemTestCase
           click_on "Delete"
         end
 
-        refute_text "Cat Videos"
-        assert_text "Chicken Videos"
+        within ".album" do
+          refute_text "Cat Videos"
+          assert_text "Chicken Videos"
+        end
       end
     end
   end
