@@ -12,7 +12,11 @@ class PlaylistVideosController < ApplicationController
   def destroy
     playlist_video = PlaylistVideo.find(params[:id])
     playlist_id = playlist_video.playlist_id
+    position = playlist_video.position
     playlist_video.destroy
+    PlaylistVideo.where(playlist_id: playlist_id).where("position > ?", position).each do |playlist_video|
+      playlist_video.update(position: playlist_video.position - 1)
+    end
 
     redirect_to playlist_path(playlist_id), status: :see_other, notice: "Playlist entry successfully deleted."
   end
