@@ -66,6 +66,7 @@ group :test do
   gem "selenium-webdriver"
   gem "webmock"
   gem "vcr"
+  gem "minitest-stub_any_instance"
 end
 
 # TODO: docs

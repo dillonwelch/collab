@@ -71,4 +71,44 @@ class VideosTest < ApplicationSystemTestCase
       end
     end
   end
+
+  test "adding a video to a playlist" do
+    Playlist.create!(name: "Cat Videos")
+    Playlist.create!(name: "Dog Videos")
+
+    assert_changes -> { PlaylistVideo.count }, 1 do
+      mock_video_service do
+        # puts "root 1: #{VideoService.get}"
+        # puts "root get 1: #{VideoService.get_by_video_id('123')}"
+        visit root_path
+        visit playlists_path
+        visit root_path
+      end
+
+      within "##{short_video["video_id"]}" do
+        # puts "1: #{VideoService.get}"
+        # puts "2: #{VideoService.get}"
+        # puts "3: #{VideoService.get}"
+        # puts "get 1: #{VideoService.get_by_video_id('123')}"
+        # puts "get 2: #{VideoService.get_by_video_id('123')}"
+        # puts "get 3: #{VideoService.get_by_video_id('123')}"
+        # puts "get 4: #{VideoService.get_by_video_id('123')}"
+
+        select "Dog Videos"
+        mock_video_service do
+          # mock = Minitest::Mock.new
+          # mock.expect :video, short_video
+          PlaylistVideo.stub_any_instance(:video, short_video) do
+            String.stub_any_instance(:length, 42) do
+              puts "length: #{'hello'.length}"
+              assert_equal "hello".length, 42
+            end
+            video = PlaylistVideo.new
+            puts "pls: #{video.video}"
+            click_on "Add to playlist"
+          end
+        end
+      end
+    end
+  end
 end

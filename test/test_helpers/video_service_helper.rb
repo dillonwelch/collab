@@ -27,8 +27,12 @@ module VideoServiceHelper
   # Stubs the result of VideoService.get using mocked data.
   # @yield [nil] Wraps the yield within a stub call.
   def mock_video_service
-    VideoService.stub :get, [short_video, long_video] do
-      yield
+    VideoService.stub "get", [short_video, long_video] do
+      puts "hey I'm yielding 1"
+      VideoService.stub "get_by_video_id", short_video do
+        puts "hey I'm yielding 2"
+        yield
+      end
     end
   end
 end
