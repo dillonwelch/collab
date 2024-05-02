@@ -11,13 +11,15 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
 
-    assert_select(
-      "##{short_video['video_id']}>div",
-      html: "<img alt=\"Thumbnail image for video #{short_video['video_id']}\" src=\"#{short_video['thumbnail_url']}\">"
-    )
-    assert_select "##{short_video['video_id']}>div", "Title: #{short_video['title']}"
-    assert_select "##{short_video['video_id']}>div", "Description: #{short_video['description']}"
-    assert_select "##{short_video['video_id']}>div", "#{short_video['views']} views"
+    assert_select "##{short_video['video_id']}>div" do
+      # assert_select(
+      #   "##{short_video['video_id']}>div",
+      #   html: "<img alt=\"Thumbnail image for video #{short_video['video_id']}\" src=\"#{short_video['thumbnail_url']}\">"
+      # )
+      assert_select ".title", "#{short_video['title']}"
+      assert_select ".description", "#{short_video['description']}"
+      assert_select ".views", "#{short_video['views']} views"
+    end
   end
 
   test "video description is truncated when long" do

@@ -9,11 +9,11 @@
           <div class="card video-card shadow-sm">
             <%= image_tag(video["thumbnail_url"], alt: "Thumbnail image for video #{video['video_id']}") %>
             <div class="card-body">
-              <p class="card-text"><%= video["title"] %></p>
+              <p class="card-text title"><%= video["title"] %></p>
               <!--          TODO: add ...-->
               <!--          TODO: nil description ...-->
               <p class="card-text description"><%= video["description"]&.first(100) %></p>
-              <p class="card-text"><%= video["views"] %> views</p>
+              <p class="card-text views"><%= video["views"] %> views</p>
               <% unless playlist_options.empty? %>
                 <%= form_with model: PlaylistVideo.new do |form| %>
                   <%= form.hidden_field :video_id, value: video["video_id"] %>
