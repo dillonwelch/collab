@@ -12,6 +12,7 @@ class PlaylistVideo < ApplicationRecord
   validates :position, numericality: { only_integer: true, greater_than: 0, allow_nil: true }
 
   # TODO: recalculate positions
+  # TODO: uniquness of position scoped to id
 
   # Fetches the JSON video information for the video ID assigned to the record.
   # @return [Hash] JSON video information.

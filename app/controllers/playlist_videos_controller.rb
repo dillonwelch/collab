@@ -8,6 +8,14 @@ class PlaylistVideosController < ApplicationController
     @playlist_video.save!
   end
 
+  # TODO: test
+  def destroy
+    playlist_video = PlaylistVideo.find(params[:id])
+    playlist_id = playlist_video.playlist_id
+    playlist_video.destroy
+
+    redirect_to playlist_path(playlist_id), status: :see_other, notice: "Playlist entry successfully deleted."
+  end
   # TODO: Edit and reorder
 
   private

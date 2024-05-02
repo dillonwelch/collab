@@ -4,6 +4,7 @@
   <div>No videos added! Consider adding some :)</div>
 <% else  %>
 <!--  TODO: style h2-->
+<!--  TODO: scrolls kinda weird and overlaps body-->
   <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Videos</h2>
 <!--  TODO: fix the sizing issue-->
   <div class="album py-5 bg-body-tertiary">
@@ -13,13 +14,16 @@
             <% video = playlist_video.video %>
             <div id="<%= video['video_id'] %>" class="col">
               <div class="card video-card shadow-sm">
-                <%= image_tag(video["thumbnail_url"], alt: "Thumbnail image for video #{video['video_id']}") %>
                 <div class="card-body">
+                  <p class="card-text position">Position: <%= playlist_video.position %></p>
                   <p class="card-text title"><%= video["title"] %></p>
                   <!--          TODO: add ...-->
                   <!--          TODO: nil description ...-->
                   <p class="card-text description"><%= video["description"]&.first(100)&.rjust(50) %></p>
                   <p class="card-text views"><%= video["views"] %> views</p>
+                  <div class="btn-group">
+                    <%= link_to("Delete", playlist_video_path(playlist_video.id), class: "btn btn-sm btn-outline-secondary", data: { turbo_method: :delete }) %>
+                  </div>
                 </div>
               </div>
             </div>
