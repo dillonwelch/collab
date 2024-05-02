@@ -28,8 +28,8 @@ class PlaylistVideosController < ApplicationController
     to_video = PlaylistVideo.find(params[:to_id])
     to_position = to_video.position
 
-    from_video.update(position: to_position)
-    to_video.update(position: from_position)
+    from_video.update!(position: to_position)
+    to_video.update!(position: from_position)
   end
 
   private

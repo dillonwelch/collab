@@ -34,10 +34,11 @@ class PlaylistVideosControllerTest < ActionDispatch::IntegrationTest
       from_video = PlaylistVideo.create!(playlist: playlist, video_id: short_video["video_id"])
       to_video = PlaylistVideo.create!(playlist: playlist, video_id: long_video["video_id"])
 
-      patch "/playlist_videos/swap", params: { from_id: from_video.id, to_id: to_video.id }
-
-      puts from_video.reload.to_json
-      puts to_video.reload.to_json
+      assert_changes -> { from_video.reload.position }, from: 1, to: 2 do
+        assert_changes -> { to_video.reload.position }, from: 2, to: 1 do
+          patch playlist_videos_swap_path, params: { from_id: from_video.id, to_id: to_video.id }
+        end
+      end
     end
   end
 end

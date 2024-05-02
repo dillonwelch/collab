@@ -11,6 +11,6 @@ Rails.application.routes.draw do
   resources :playlists
 
   # TODO: only use needed routes
-  resources :playlist_videos
   patch "/playlist_videos/swap", to: "playlist_videos#swap"
+  resources :playlist_videos
 end
