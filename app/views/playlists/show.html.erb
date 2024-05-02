@@ -1,11 +1,8 @@
 <!--  TODO: style h1-->
-<h1><%= @playlist.name %></h1>
+<h1 style="text-align: center"><%= @playlist.name %></h1>
 <% if @playlist.playlist_videos.empty? %>
   <div>No videos added! Consider adding some :)</div>
 <% else  %>
-<!--  TODO: style h2-->
-<!--  TODO: scrolls kinda weird and overlaps body-->
-  <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Videos</h2>
 <!--  TODO: fix the sizing issue-->
   <div class="album py-5 bg-body-tertiary">
       <div class="container">
