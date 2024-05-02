@@ -12,6 +12,7 @@ module ApplicationHelper
     link_to(name, url, options)
   end
 
+  # TODO: Do we still need this and if so document it and test
   def flash_mapper(type)
     {
       "alert" => "danger",

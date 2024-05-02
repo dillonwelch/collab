@@ -3,6 +3,7 @@ require "net/http"
 class PlaylistVideosController < ApplicationController
   def create
     # TODO: proper error response
+    # TODO: flash messages
     @playlist_video = PlaylistVideo.new(playlist_video_params)
     @playlist_video.save!
   end

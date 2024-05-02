@@ -2,8 +2,6 @@ class PlaylistsController < ApplicationController
   def index
     # TODO: Paginate?
     @playlists = Playlist.all
-    # flash[:alert] = "hey!"
-    # flash[:notice] = "wow"
   end
 
   def show
@@ -20,7 +18,6 @@ class PlaylistsController < ApplicationController
     if @playlist.save
       redirect_to @playlist, notice: "Playlist \"#{@playlist.name}\" successfully created."
     else
-      # TODO: render errors
       render :new, status: :unprocessable_entity
     end
   end
@@ -35,7 +32,6 @@ class PlaylistsController < ApplicationController
     if @playlist.update(name: params[:playlist][:name])
       redirect_to @playlist, notice: "Playlist \"#{@playlist.name}\" successfully updated."
     else
-      # TODO: render errors
       render :edit, status: :unprocessable_entity
     end
   end

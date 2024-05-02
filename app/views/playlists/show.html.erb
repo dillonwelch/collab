@@ -3,6 +3,27 @@
   <div>No videos added! Consider adding some :)</div>
 <% else  %>
   <h2>Videos</h2>
+  <div class="album py-5 bg-body-tertiary">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-1">
+          <% @playlist.playlist_videos.each do |playlist_video| %>
+            <% video = playlist_video.video %>
+            <div id="<%= video['video_id'] %>" class="col">
+              <div class="card video-card shadow-sm">
+                <%= image_tag(video["thumbnail_url"], alt: "Thumbnail image for video #{video['video_id']}") %>
+                <div class="card-body">
+                  <p class="card-text title"><%= video["title"] %></p>
+                  <!--          TODO: add ...-->
+                  <!--          TODO: nil description ...-->
+                  <p class="card-text description"><%= video["description"]&.first(100)&.rjust(50) %></p>
+                  <p class="card-text views"><%= video["views"] %> views</p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+  </div>
   <% @playlist.playlist_videos.each do |playlist_video| %>
     <div>
       ID: <%= playlist_video.video_id %>

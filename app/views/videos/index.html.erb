@@ -16,6 +16,7 @@
                 <%= form_with model: PlaylistVideo.new do |form| %>
                   <%= form.hidden_field :video_id, value: video["video_id"] %>
                   <%= form.select :playlist_id, playlist_options %>
+<!--                  TODO: does not refresh the page??-->
                   <%= form.submit "Add to playlist"%>
                 <% end %>
               <% end %>
