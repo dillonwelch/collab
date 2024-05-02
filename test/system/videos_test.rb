@@ -29,12 +29,17 @@ class VideosTest < ApplicationSystemTestCase
   test "editing a playlist" do
     mock_video_service do
       playlist = Playlist.create!(name: "Cat Videos")
+      Playlist.create!(name: "Chicken Videos")
 
       assert_changes -> { playlist.reload.name }, from: "Cat Videos", to: "Dog Videos" do
         visit root_path
 
         click_on "All Playlists"
-        click_on "Edit"
+
+        within "#playlist-#{playlist.id}" do
+          click_on "Edit"
+        end
+
         fill_in "Name", with: "Dog Videos"
         click_button "Update Playlist"
 
@@ -45,12 +50,15 @@ class VideosTest < ApplicationSystemTestCase
 
   test "viewing a playlist" do
     mock_video_service do
-     Playlist.create!(name: "Cat Videos")
+      playlist = Playlist.create!(name: "Cat Videos")
+      Playlist.create!(name: "Chicken Videos")
 
       visit root_path
 
       click_on "All Playlists"
-      click_on "View"
+      within "#playlist-#{playlist.id}" do
+        click_on "View"
+      end
 
       assert_text "Cat Videos"
     end
@@ -58,16 +66,19 @@ class VideosTest < ApplicationSystemTestCase
 
   test "deleting a playlist" do
     mock_video_service do
-      Playlist.create!(name: "Cat Videos")
+      playlist = Playlist.create!(name: "Cat Videos")
+      Playlist.create!(name: "Chicken Videos")
 
       assert_changes -> { Playlist.where(name: "Cat Videos").count }, -1 do
         visit root_path
 
         click_on "All Playlists"
-        click_on "Delete"
+        within "#playlist-#{playlist.id}" do
+          click_on "Delete"
+        end
 
         refute_text "Cat Videos"
-        assert_text "No playlists! Consider making one :)"
+        assert_text "Chicken Videos"
       end
     end
   end
