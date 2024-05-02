@@ -1,24 +1,30 @@
-<div class="container">
-  <!--  TODO: controller?-->
-  <% playlist_options = options_for_select(@playlists) %>
+<div class="album py-5 bg-body-tertiary">
+  <div class="container">
+    <!--  TODO: controller?-->
+    <% playlist_options = options_for_select(@playlists) %>
 
-  <div class="row video-column">
-    <% @result.each do |video| %>
-      <div id="<%= video['video_id'] %>" class="col-md-3 video-card" >
-        <div><%= image_tag(video["thumbnail_url"], alt: "Thumbnail image for video #{video['video_id']}") %></div>
-        <div class="title"><%= video["title"] %></div>
-        <!--          TODO: add ...-->
-        <!--          TODO: nil description ...-->
-        <div><%= video["description"]&.first(100) %></div>
-        <div><%= video["views"] %> views</div>
-        <% unless playlist_options.empty? %>
-          <%= form_with model: PlaylistVideo.new do |form| %>
-            <%= form.hidden_field :video_id, value: video["video_id"] %>
-            <%= form.select :playlist_id, playlist_options %>
-            <%= form.submit "Add to playlist"%>
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      <% @result.each do |video| %>
+        <div id="<%= video['video_id'] %>" class="col video-column" >
+          <div class="card video-card shadow-sm">
+            <%= image_tag(video["thumbnail_url"], class: "video-card-image", alt: "Thumbnail image for video #{video['video_id']}") %>
+            <div class="card-body">
+              <p class="card-text"><%= video["title"] %></p>
+              <!--          TODO: add ...-->
+              <!--          TODO: nil description ...-->
+              <p class="card-text"><%= video["description"]&.first(100) %></p>
+              <p class="card-text"><%= video["views"] %> views</p>
+              <% unless playlist_options.empty? %>
+                <%= form_with model: PlaylistVideo.new do |form| %>
+                  <%= form.hidden_field :video_id, value: video["video_id"] %>
+                  <%= form.select :playlist_id, playlist_options %>
+                  <%= form.submit "Add to playlist"%>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
