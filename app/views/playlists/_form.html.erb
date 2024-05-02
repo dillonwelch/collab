@@ -1,12 +1,8 @@
 <%= form_with model: playlist do |form| %>
-  <div>
-    <div><%= form.label :name %></div>
-    <div><%= form.text_field :name %></div>
-    <% @playlist.errors.full_messages_for(:name).each do |message| %>
-      <div><%= message %></div>
-    <% end %>
-  </div>
-  <div>
-    <%= form.submit %>
-  </div>
+  <%= form.label :name, class: "form-label" %>
+  <%= form.text_field :name, class: "form-control" %>
+  <% @playlist.errors.full_messages_for(:name).each do |message| %>
+    <div class="form-text"><%= message %></div>
+  <% end %>
+  <%= form.submit class: "btn btn-primary" %>
 <% end %>

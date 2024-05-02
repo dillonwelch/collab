@@ -1,8 +1,11 @@
+<!--  TODO: style h1-->
 <h1><%= @playlist.name %></h1>
 <% if @playlist.playlist_videos.empty? %>
   <div>No videos added! Consider adding some :)</div>
 <% else  %>
-  <h2>Videos</h2>
+<!--  TODO: style h2-->
+  <h2 class="sticky-xl-top fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">Videos</h2>
+<!--  TODO: fix the sizing issue-->
   <div class="album py-5 bg-body-tertiary">
       <div class="container">
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-1">
@@ -24,11 +27,4 @@
         </div>
       </div>
   </div>
-  <% @playlist.playlist_videos.each do |playlist_video| %>
-    <div>
-      ID: <%= playlist_video.video_id %>
-      Position: <%= playlist_video.position %>
-      Title: <%= playlist_video.video["title"] %>
-    </div>
-  <% end %>
 <% end %>

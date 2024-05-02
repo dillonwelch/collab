@@ -40,7 +40,7 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
 
         assert_response :success
         assert_match "Cat Videos", @response.body
-        assert_match "ID: #{short_video["video_id"]}", @response.body
+        assert_match "#{short_video["title"]}", @response.body
       end
     end
 
