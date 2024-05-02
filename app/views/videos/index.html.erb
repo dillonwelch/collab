@@ -7,7 +7,7 @@
       <% @result.each do |video| %>
         <div id="<%= video['video_id'] %>" class="col video-column" >
           <div class="card video-card shadow-sm">
-            <%= image_tag(video["thumbnail_url"], class: "video-card-image", alt: "Thumbnail image for video #{video['video_id']}") %>
+            <%= image_tag(video["thumbnail_url"], alt: "Thumbnail image for video #{video['video_id']}") %>
             <div class="card-body">
               <p class="card-text"><%= video["title"] %></p>
               <!--          TODO: add ...-->
