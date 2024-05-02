@@ -14,13 +14,23 @@ class PlaylistVideosController < ApplicationController
     playlist_id = playlist_video.playlist_id
     position = playlist_video.position
     playlist_video.destroy
-    PlaylistVideo.where(playlist_id: playlist_id).where("position > ?", position).each do |playlist_video|
-      playlist_video.update(position: playlist_video.position - 1)
+    PlaylistVideo.where(playlist_id: playlist_id).where("position > ?", position).each do |video|
+      video.update(position: video.position - 1)
     end
 
     redirect_to playlist_path(playlist_id), status: :see_other, notice: "Playlist entry successfully deleted."
   end
-  # TODO: Edit and reorder
+
+  # TODO: Edit and reorder on UI
+  def swap
+    from_video = PlaylistVideo.find(params[:from_id])
+    from_position = from_video.position
+    to_video = PlaylistVideo.find(params[:to_id])
+    to_position = to_video.position
+
+    from_video.update(position: to_position)
+    to_video.update(position: from_position)
+  end
 
   private
 

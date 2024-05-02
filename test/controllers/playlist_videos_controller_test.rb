@@ -27,4 +27,17 @@ class PlaylistVideosControllerTest < ActionDispatch::IntegrationTest
       assert_response :unprocessable_entity
     end
   end
+
+  test"blah" do
+    mock_video_service do
+      playlist = Playlist.create!(name: "Cat Videos")
+      from_video = PlaylistVideo.create!(playlist: playlist, video_id: short_video["video_id"])
+      to_video = PlaylistVideo.create!(playlist: playlist, video_id: long_video["video_id"])
+
+      patch "/playlist_videos/swap", params: { from_id: from_video.id, to_id: to_video.id }
+
+      puts from_video.reload.to_json
+      puts to_video.reload.to_json
+    end
+  end
 end
