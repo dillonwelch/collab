@@ -23,7 +23,9 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
   test "video description is truncated when long" do
     visit_index
     # TODO: test long description with ...
-    assert_select "##{long_video['video_id']}>div",  "Description: #{long_video['description'].first(20)}"
+    assert_select "##{long_video['video_id']}>div" do
+      assert_select ".description", long_video['description'].first(100)
+    end
   end
 
   test "add to playlist is hidden if there are no playlists" do

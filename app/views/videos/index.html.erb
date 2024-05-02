@@ -12,7 +12,7 @@
               <p class="card-text"><%= video["title"] %></p>
               <!--          TODO: add ...-->
               <!--          TODO: nil description ...-->
-              <p class="card-text"><%= video["description"]&.first(100) %></p>
+              <p class="card-text description"><%= video["description"]&.first(100) %></p>
               <p class="card-text"><%= video["views"] %> views</p>
               <% unless playlist_options.empty? %>
                 <%= form_with model: PlaylistVideo.new do |form| %>

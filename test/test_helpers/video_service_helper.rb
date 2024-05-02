@@ -18,7 +18,7 @@ module VideoServiceHelper
     {
       "video_id" => "long_video_123",
       "thumbnail_url" => "https://i.ytimg.com/vi/H1tQhK0n5Qk/default.jpg",
-      "description" => "meow" * 10,
+      "description" => "meow" * 100,
       "title" => "Long Video",
       "views" => 6
     }
@@ -28,11 +28,7 @@ module VideoServiceHelper
   # @yield [nil] Wraps the yield within a stub call.
   def mock_video_service
     VideoService.stub "get", [short_video, long_video] do
-      puts "hey I'm yielding 1"
-      VideoService.stub "get_by_video_id", short_video do
-        puts "hey I'm yielding 2"
-        yield
-      end
+      yield
     end
   end
 end

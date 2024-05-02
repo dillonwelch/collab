@@ -16,10 +16,7 @@ class PlaylistVideo < ApplicationRecord
   # Fetches the JSON video information for the video ID assigned to the record.
   # @return [Hash] JSON video information.
   def video
-    puts "video method!!!"
     @video ||= VideoService.get_by_video_id(video_id)
-    puts "video: #{@video}"
-    @video
   end
 
   private

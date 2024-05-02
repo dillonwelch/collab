@@ -28,7 +28,6 @@ class VideoService
   #   on test API used during development.
   # @return [Array<Hash>] The list of videos from the Video API.
   def self.get(api_page_size: 20)
-    puts "omg get"
     Rails.cache.fetch(CACHE_KEYS[__method__]) do
       page = 1
       data = []
@@ -48,8 +47,6 @@ class VideoService
   # @return [Hash] The JSON data for the video, or an empty array if nothing was found.
   # @see VideoService.get which is used internally for fetching the data.
   def self.get_by_video_id(video_id)
-    puts "within get_by_video_id"
-    puts "4: #{VideoService.get.first}"
     Rails.cache.fetch(CACHE_KEYS[__method__]) do
       VideoService.get.each_with_object(Hash.new({})) { |item, hash| hash[item["video_id"]] = item }
     end[video_id]
