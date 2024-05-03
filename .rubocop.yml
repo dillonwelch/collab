@@ -8,5 +8,8 @@ Metrics/BlockLength:
   Exclude:
     - config/**/*
 
+Metrics/MethodLength:
+  Max: 20
+
 Style/Documentation:
   Enabled: false
