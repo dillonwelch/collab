@@ -45,7 +45,7 @@ class PlaylistVideosControllerTest < ActionDispatch::IntegrationTest
           end
         end
 
-        assert_redirected_to playlist_path(playlist)
+        assert_redirected_to playlist_path(playlist), status: :see_other
         assert_match 'Playlist entry successfully deleted.', flash[:notice]
       end
     end
