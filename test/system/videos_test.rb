@@ -85,7 +85,34 @@ class VideosTest < ApplicationSystemTestCase
     end
   end
 
-  # TODO: Make this work
+  test "interacting with a playlist with videos" do
+    mock_video_service do
+      playlist = Playlist.create!(name: "Cat Videos")
+      one = PlaylistVideo.create!(playlist: playlist, video_id:  short_video["video_id"])
+      two = PlaylistVideo.create!(playlist: playlist, video_id:  long_video["video_id"])
+
+      visit playlist_path(playlist)
+
+      within ".album" do
+        within "##{one.video_id}" do
+          assert_text one.video["description"]
+        end
+        within "##{two.video_id}" do
+          assert_text two.video["description"]
+        end
+      end
+
+      # TODO: For some bizarre reason, the PlaylistVideoController is not using my mocks, which makes this test fail
+      # as it uses the API results instead of the mocked results.
+      # test "adding a video to a playlist" do
+      # within "##{one.video_id}" do
+      #   click_on "Delete"
+      # end
+    end
+  end
+
+  # TODO: For some bizarre reason, the PlaylistVideoController is not using my mocks, which makes this test fail
+  # as it uses the API results instead of the mocked results.
   # test "adding a video to a playlist" do
   #   Playlist.create!(name: "Cat Videos")
   #   Playlist.create!(name: "Dog Videos")

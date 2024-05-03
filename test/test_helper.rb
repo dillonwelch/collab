@@ -3,7 +3,6 @@ require_relative "../config/environment"
 require "rails/test_help"
 require "minitest/autorun"
 require "test_helpers/video_service_helper"
-require "minitest/stub_any_instance"
 
 module ActiveSupport
   class TestCase

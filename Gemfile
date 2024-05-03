@@ -78,6 +78,4 @@ group :test do
   gem "webmock"
   # Record and playback non-localhost HTTP requests.
   gem "vcr"
-
-  gem "minitest-stub_any_instance" # TODO: Not sure if needed
 end
