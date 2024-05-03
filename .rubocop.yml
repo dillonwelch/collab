@@ -1,3 +1,6 @@
+require:
+  - rubocop-capybara
+
 AllCops:
   Exclude:
     - bin/*

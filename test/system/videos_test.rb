@@ -20,8 +20,10 @@ class VideosTest < ApplicationSystemTestCase
 
       assert_changes -> { Playlist.where(name: 'Cat Videos').count }, 1 do
         click_on 'Create Playlist'
-        fill_in 'Name', with: 'Cat Videos'
-        click_button 'Create Playlist'
+        within 'form' do
+          fill_in 'Name', with: 'Cat Videos'
+          click_on 'Create Playlist'
+        end
 
         assert_text 'No videos added! Consider adding some :)'
       end
@@ -43,7 +45,7 @@ class VideosTest < ApplicationSystemTestCase
         end
 
         fill_in 'Name', with: 'Dog Videos'
-        click_button 'Update Playlist'
+        click_on 'Update Playlist'
 
         assert_text 'No videos added! Consider adding some :)'
       end
