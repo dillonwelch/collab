@@ -1,7 +1,6 @@
 require "test_helper"
 
 class PlaylistsControllerTest < ActionDispatch::IntegrationTest
-  # TODO: Test playlist links after UI is finalized
   class PlaylistsControllerIndexTest < PlaylistsControllerTest
     test "request with no playlists displays a 'No Playlists' message" do
       get playlists_path
