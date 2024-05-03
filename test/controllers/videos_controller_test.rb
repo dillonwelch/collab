@@ -23,11 +23,10 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "video description is truncated when long" do
+  test "long video descriptions are supported" do
     visit_index
-    # TODO: test long description with ...
     assert_select "##{long_video['video_id']}>div" do
-      assert_select ".description", long_video['description'].first(100)
+      assert_select ".description", long_video['description']
     end
   end
 

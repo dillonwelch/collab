@@ -1,6 +1,5 @@
 class PlaylistsController < ApplicationController
   def index
-    # TODO: Paginate?
     @playlists = Playlist.all
   end
 

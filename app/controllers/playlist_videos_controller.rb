@@ -3,7 +3,6 @@ require "net/http"
 class PlaylistVideosController < ApplicationController
   protect_from_forgery with: :null_session, only: :swap
   def create
-    # TODO: flash messages
     playlist_video = PlaylistVideo.new(playlist_video_params)
     playlist_video.save!
   end
@@ -21,7 +20,6 @@ class PlaylistVideosController < ApplicationController
     redirect_to playlist_path(playlist_id), status: :see_other, notice: "Playlist entry successfully deleted."
   end
 
-  # TODO: Reorder on UI
   def swap
     from_video = PlaylistVideo.find_by_video_id(params[:from_id])
     from_position = from_video.position
