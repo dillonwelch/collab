@@ -1,3 +1,60 @@
+<script>
+
+    addEventListener(
+      "dragstart", (event) => {
+        event.dataTransfer.setData("text/plain", event.target.id)
+        console.log("Start: " + event.dataTransfer.getData("text/plain"))
+      }
+    );
+    // addEventListener(
+    //     "dragover", (event) => {
+    //         console.log("Over: " + event)
+    //     }
+    // );
+    addEventListener(
+        "dragover", (event) => {
+          event.preventDefault();
+          console.log("End: " + event.dataTransfer.getData("text"))
+        }
+    );
+    // addEventListener("dragstart", (event) => { drag(event); });
+    // addEventListener("drop", (event) => { drop(event); });
+    // addEventListener("drag", (event) => { console.log(event)});
+
+    // ondrag = (event) => { console.log(event) };
+
+    // addEventListener("dragend", (event) => { console.log(event.target.id); });
+
+    // ondragend = (event) => { console.log(event)};
+    // function allowDrop(allowdropevent) {
+    //     // console.log("Allow drop!: " + allowdropevent.dataTransfer.getData("allowDrop"))
+    //     // allowdropevent.dataTransfer.setData("allowDrop", "1");
+    //     // // allowdropevent.target.style.color = "blue";
+    //     // allowdropevent.preventDefault();
+    // }
+    //
+    // function drag(dragevent) {
+    //     console.log("Drag!: " + dragevent.dataTransfer.getData("allowDrop"))
+    //     dragevent.dataTransfer.setData("drag", "1");
+    //     // dragevent.dataTransfer.setData("text", dragevent.target.id);
+    //     // dragevent.target.style.color = "green";
+    // }
+    //
+    // function drop(dropevent) {
+    //     console.log("Allow drop!")
+    //     console.log("Drop! " + dropevent.dataTransfer.getData("drop"))
+    //     dropevent.dataTransfer.setData("drop", "1");
+    //     dropevent.preventDefault();
+    //     // const data = dropevent.dataTransfer.getData("text");
+    //     // dropevent.target.appendChild(document.getElementById(data));
+    //     // document.getElementById("drag").style.color = "black";
+    // }
+    //
+    // addEventListener("dragover", (event) => { allowDrop(event); });
+    // addEventListener("dragstart", (event) => { drag(event); });
+    // addEventListener("drop", (event) => { drop(event); });
+</script>
+
 <h1 style="text-align: center"><%= @playlist.name %></h1>
 <% if @playlist.playlist_videos.empty? %>
   <div>No videos added! Consider adding some :)</div>
@@ -7,10 +64,11 @@
         <div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-1">
           <% @playlist.playlist_videos.order(:position).each do |playlist_video| %>
             <% video = playlist_video.video %>
-            <div id="<%= video['video_id'] %>" class="col">
+            <div id="<%= video['video_id'] %>"draggable="true" class="col">
               <div class="card video-card shadow-sm">
                 <%= image_tag(video["thumbnail_url"], style: "width: 100px; height: 100px;", alt: "Thumbnail image for video #{video['video_id']}") %>
                 <div class="card-body">
+<!--                  TODO: better text display instead of "Position:"-->
                   <p class="card-text position">Position: <%= playlist_video.position %></p>
                   <p class="card-text title"><%= video["title"] %></p>
                   <!--          TODO: add ...-->
