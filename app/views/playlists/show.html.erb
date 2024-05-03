@@ -24,7 +24,7 @@
             // console.log("Drop")
             // debugger;
           event.preventDefault();
-          debugger
+          // debugger
           console.log("End target: " + event.target.id)
           console.log("End ID: " + event.dataTransfer.getData("text"))
         }
@@ -73,24 +73,30 @@
 <% else  %>
   <div class="album py-5 bg-body-tertiary" style="width: 70%; margin-left: auto; margin-right: auto;">
       <div class="container">
-        <div class="row row-cols-2 g-2">
+<!--        TODO: g2-->
+        <div class="row row-cols-1 g-2">
           <% @playlist.playlist_videos.order(:position).each do |playlist_video| %>
             <% video = playlist_video.video %>
-            <div class="col-2">
-              <%= image_tag(video["thumbnail_url"], style: "width: 100px; height: 100px;", alt: "Thumbnail image for video #{video['video_id']}") %>
-            </div>
-            <div id="<%= video['video_id'] %>"draggable="true" class="col-10">
-              <div class="card video-card shadow-sm">
-                <div class="card-body">
-<!--                  TODO: better text display instead of "Position:"-->
-                  <p class="card-text position">Position: <%= playlist_video.position %></p>
-                  <p class="card-text title"><%= video["title"] %></p>
-                  <!--          TODO: add ...-->
-                  <!--          TODO: nil description ...-->
-                  <p class="card-text description"><%= video["description"]&.first(100)&.rjust(50) %></p>
-                  <p class="card-text views"><%= video["views"] %> views</p>
-                  <div class="btn-group">
-                    <%= link_to("Delete", playlist_video_path(playlist_video.id), class: "btn btn-sm btn-outline-secondary", data: { turbo_method: :delete }) %>
+            <div id="<%= video['video_id'] %>" class="row row-cols-2">
+              <div id="draggable-<%= video['video_id'] %>" class="col-1" draggable="true">
+                =
+                <!--                  TODO: better text display instead of "Position:"-->
+                <%#= playlist_video.position %>
+              </div>
+              <div class="col-2">
+                <%= image_tag(video["thumbnail_url"], alt: "Thumbnail image for video #{video['video_id']}") %>
+              </div>
+              <div class="col-9">
+                <div class="card video-card shadow-sm">
+                  <div class="card-body">
+                    <p class="card-text title"><%= video["title"] %></p>
+                    <!--          TODO: add ...-->
+                    <!--          TODO: nil description ...-->
+                    <p class="card-text description"><%= video["description"]&.first(100)&.rjust(50) %></p>
+                    <p class="card-text views"><%= video["views"] %> views</p>
+                    <div class="btn-group">
+                      <%= link_to("Delete", playlist_video_path(playlist_video.id), class: "btn btn-sm btn-outline-secondary", data: { turbo_method: :delete }) %>
+                    </div>
                   </div>
                 </div>
               </div>
