@@ -4,6 +4,9 @@ AllCops:
     - db/schema.rb
   NewCops: enable
 
-Style/Documentation:
+Metrics/BlockLength:
   Exclude:
-    - db/migrate/*
+    - config/**/*
+
+Style/Documentation:
+  Enabled: false
