@@ -19,6 +19,7 @@ class VideoServiceTest < ActiveSupport::TestCase
     test 'clears the relevant caches' do
       VideoService::CACHE_KEYS.each_value do |key|
         Rails.cache.write(key, 'meow')
+
         assert_equal 'meow', Rails.cache.read(key)
       end
 
@@ -71,6 +72,7 @@ class VideoServiceTest < ActiveSupport::TestCase
         'created_at' => '2024-04-24T20:59:19.215Z',
         'updated_at' => '2024-04-24T20:59:19.215Z'
       }
+
       assert_equal video, @result.first
     end
   end
@@ -89,6 +91,7 @@ class VideoServiceTest < ActiveSupport::TestCase
         'created_at' => '2024-04-24T20:59:19.215Z',
         'updated_at' => '2024-04-24T20:59:19.215Z'
       }
+
       VCR.use_cassette 'lib/video_service/get', allow_unused_http_interactions: false do
         assert_equal video, VideoService.get_by_video_id(video['video_id'])
       end
@@ -96,7 +99,7 @@ class VideoServiceTest < ActiveSupport::TestCase
 
     test 'returns {} if the video was not found' do
       VCR.use_cassette 'lib/video_service/get', allow_unused_http_interactions: false do
-        assert_equal({}, VideoService.get_by_video_id('not a valid video ID'))
+        assert_empty(VideoService.get_by_video_id('not a valid video ID'))
       end
     end
   end

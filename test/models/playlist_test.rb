@@ -5,13 +5,15 @@ require 'test_helper'
 class PlaylistTest < ActiveSupport::TestCase
   test 'validates presence of name' do
     playlist = Playlist.create
-    assert_equal playlist.errors.messages[:name], ["can't be blank"]
+
+    assert_equal ["can't be blank"], playlist.errors.messages[:name]
   end
 
   test 'validates uniqueness of name' do
     Playlist.create!(name: 'Good test playlist')
     playlist = Playlist.create(name: 'Good test playlist')
-    assert_equal playlist.errors.messages[:name], ['has already been taken']
+
+    assert_equal ['has already been taken'], playlist.errors.messages[:name]
   end
 
   test 'has an association to PlaylistVideo' do
