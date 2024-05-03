@@ -1,41 +1,41 @@
 <h1 style="text-align: center"><%= @playlist.name %></h1>
 <% if @playlist.playlist_videos.empty? %>
   <div>No videos added! Consider adding some :)</div>
-<% else  %>
+<% else %>
   <p style="text-align: center">Tip: Reorder your playlist by dragging and dropping on the left hand side</p>
   <div class="album py-5 bg-body-tertiary" style="width: 70%; margin-left: auto; margin-right: auto;">
-      <div class="container">
-        <div class="row row-cols-1 g-2">
-          <% @playlist.playlist_videos.order(:position).each do |playlist_video| %>
-            <% video = playlist_video.video %>
-            <div id="<%= video['video_id'] %>" class="row row-cols-2">
-              <div id="draggable-<%= video['video_id'] %>" class="col-1 playlist-draggable" draggable="true">
-                =
-              </div>
-              <div class="col-2">
-                <%= image_tag(video["thumbnail_url"], alt: "Thumbnail image for video #{video['video_id']}") %>
-              </div>
-              <div class="col-9">
-                <div class="card video-card shadow-sm">
-                  <div class="card-body">
-                    <p class="card-text title"><%= video["title"] %></p>
-                    <p class="card-text description"><%= video["description"] %></p>
-                    <p class="card-text views"><%= video["views"] %> views</p>
-                    <div class="btn-group">
-                      <%= link_to("Delete", playlist_video_path(playlist_video.id), class: "btn btn-sm btn-outline-secondary", data: { turbo_method: :delete }) %>
-                    </div>
+    <div class="container">
+      <div class="row row-cols-1 g-2">
+        <% @playlist.playlist_videos.order(:position).each do |playlist_video| %>
+          <% video = playlist_video.video %>
+          <div id="<%= video['video_id'] %>" class="row row-cols-2">
+            <div id="draggable-<%= video['video_id'] %>" class="col-1 playlist-draggable" draggable="true">
+              =
+            </div>
+            <div class="col-2">
+              <%= image_tag(video["thumbnail_url"], alt: "Thumbnail image for video #{video['video_id']}") %>
+            </div>
+            <div class="col-9">
+              <div class="card video-card shadow-sm">
+                <div class="card-body">
+                  <p class="card-text title"><%= video["title"] %></p>
+                  <p class="card-text description"><%= video["description"] %></p>
+                  <p class="card-text views"><%= video["views"] %> views</p>
+                  <div class="btn-group">
+                    <%= link_to("Delete", playlist_video_path(playlist_video.id), class: "btn btn-sm btn-outline-secondary", data: { turbo_method: :delete }) %>
                   </div>
                 </div>
               </div>
             </div>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
+    </div>
   </div>
 <% end %>
 
 <script>
-  // This should probably be in its own file...
+    // This should probably be in its own file...
 
     // See https://phuoc.ng/collection/html-dom/swap-two-nodes/
     swap = function (nodeA, nodeB) {
@@ -51,50 +51,50 @@
 
     // Ensure we only execute draggable events on the nodes we want.
     document.querySelectorAll(".playlist-draggable").forEach(node => {
-      node.addEventListener(
-          "dragstart", (event) => {
-              event.dataTransfer.setData("text/plain", event.target.id)
-              event.dataTransfer.effectAllowed = "move";
-          }
-      );
-      node.addEventListener(
-          "dragover", (event) => {
-              event.dataTransfer.dropEffect = "move";
-              event.preventDefault();
-          }
-      );
-      node.addEventListener(
-          "drop", (event) => {
-              event.preventDefault();
-              const dragId = event.dataTransfer.getData("text");
-              const dragParentNode = document.getElementById(dragId).parentNode;
-              const dropId = event.target.id;
-              const dropParentNode = event.target.parentNode;
-              swap(dragParentNode, dropParentNode);
+        node.addEventListener(
+            "dragstart", (event) => {
+                event.dataTransfer.setData("text/plain", event.target.id)
+                event.dataTransfer.effectAllowed = "move";
+            }
+        );
+        node.addEventListener(
+            "dragover", (event) => {
+                event.dataTransfer.dropEffect = "move";
+                event.preventDefault();
+            }
+        );
+        node.addEventListener(
+            "drop", (event) => {
+                event.preventDefault();
+                const dragId = event.dataTransfer.getData("text");
+                const dragParentNode = document.getElementById(dragId).parentNode;
+                const dropId = event.target.id;
+                const dropParentNode = event.target.parentNode;
+                swap(dragParentNode, dropParentNode);
 
-              const apiUrl = '/playlist_videos/swap';
-              const data = {
-                  from_id: dragId.replace("draggable-", ''),
-                  to_id: dropId.replace("draggable-", ''),
-              };
+                const apiUrl = '/playlist_videos/swap';
+                const data = {
+                    from_id: dragId.replace("draggable-", ''),
+                    to_id: dropId.replace("draggable-", ''),
+                };
 
-              const requestOptions = {
-                  method: 'PATCH',
-                  headers: {
-                      'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify(data),
-              };
+                const requestOptions = {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                };
 
-              fetch(apiUrl, requestOptions).then(response => {
-                  if (!response.ok) {
-                      throw new Error('Network response was not ok');
-                  }
-              }).catch(error => {
-                  console.error('Error:', error);
-              });
-          }
-      );
+                fetch(apiUrl, requestOptions).then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        );
     });
 </script>
 
