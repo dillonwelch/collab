@@ -2,21 +2,14 @@
 
     addEventListener(
       "dragstart", (event) => {
-        // console.log("Start Pre: " + event.dataTransfer.getData("tex/**/t/plain"))
-        // console.log(`dragstart: target.id = ${event.target.id}`);
         event.dataTransfer.setData("text/plain", event.target.id)
         event.dataTransfer.effectAllowed = "move";
-        // console.log("Start getData: " + event.dataTransfer.getData("text"))
-            // debugger
       }
     );
     addEventListener(
         "dragover", (event) => {
-            // console.log("Over item kind: " +  event.dataTransfer.items[0].kind);
-            // console.log("Over get: " +  event.dataTransfer.getData("text/plain"));
-                event.dataTransfer.dropEffect = "move";
-            event.preventDefault();
-            // debugger
+          event.dataTransfer.dropEffect = "move";
+          event.preventDefault();
         }
     );
 
@@ -43,34 +36,25 @@
 
           const apiUrl = 'http://localhost:3000/playlist_videos/swap';
           const data = {
-              from_id: dragId.replace("draggable-", ''),
-              to_id: dropId.replace("draggable-", ''),
+            from_id: dragId.replace("draggable-", ''),
+            to_id: dropId.replace("draggable-", ''),
           };
 
           const requestOptions = {
-              method: 'PATCH',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(data),
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
           };
 
-          console.log("wow")
           fetch(apiUrl, requestOptions).then(response => {
-                  console.log("success?")
-                  if (!response.ok) {
-                      throw new Error('Network response was not ok');
-                  }
-                  return response.json();
-              })
-              .then(data => {
-                  outputElement.textContent = JSON.stringify(data, null, 2);
-              })
-              .catch(error => {
-                  console.error
-
-                  ('Error:', error);
-              });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+          }).catch(error => {
+            console.error('Error:', error);
+          });
         }
     );
 </script>
