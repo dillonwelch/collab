@@ -1,104 +1,104 @@
-require "application_system_test_case"
+require 'application_system_test_case'
 
 class VideosTest < ApplicationSystemTestCase
   driven_by :selenium, using: :headless_chrome
 
-  test "visiting the home page" do
+  test 'visiting the home page' do
     mock_video_service do
       visit root_path
 
-      assert_text "Short Video"
-      assert_text "Long Video"
+      assert_text 'Short Video'
+      assert_text 'Long Video'
     end
   end
 
-  test "adding a playlist" do
+  test 'adding a playlist' do
     mock_video_service do
       visit root_path
 
-      assert_changes -> { Playlist.where(name: "Cat Videos").count }, 1 do
-        click_on "Create Playlist"
-        fill_in "Name", with: "Cat Videos"
-        click_button "Create Playlist"
+      assert_changes -> { Playlist.where(name: 'Cat Videos').count }, 1 do
+        click_on 'Create Playlist'
+        fill_in 'Name', with: 'Cat Videos'
+        click_button 'Create Playlist'
 
-        assert_text "No videos added! Consider adding some :)"
+        assert_text 'No videos added! Consider adding some :)'
       end
     end
   end
 
-  test "editing a playlist" do
+  test 'editing a playlist' do
     mock_video_service do
-      playlist = Playlist.create!(name: "Cat Videos")
-      Playlist.create!(name: "Chicken Videos")
+      playlist = Playlist.create!(name: 'Cat Videos')
+      Playlist.create!(name: 'Chicken Videos')
 
-      assert_changes -> { playlist.reload.name }, from: "Cat Videos", to: "Dog Videos" do
+      assert_changes -> { playlist.reload.name }, from: 'Cat Videos', to: 'Dog Videos' do
         visit root_path
 
-        click_on "All Playlists"
+        click_on 'All Playlists'
 
         within "#playlist-#{playlist.id}" do
-          click_on "Edit"
+          click_on 'Edit'
         end
 
-        fill_in "Name", with: "Dog Videos"
-        click_button "Update Playlist"
+        fill_in 'Name', with: 'Dog Videos'
+        click_button 'Update Playlist'
 
-        assert_text "No videos added! Consider adding some :)"
+        assert_text 'No videos added! Consider adding some :)'
       end
     end
   end
 
-  test "viewing a playlist" do
+  test 'viewing a playlist' do
     mock_video_service do
-      playlist = Playlist.create!(name: "Cat Videos")
-      Playlist.create!(name: "Chicken Videos")
+      playlist = Playlist.create!(name: 'Cat Videos')
+      Playlist.create!(name: 'Chicken Videos')
 
       visit root_path
 
-      click_on "All Playlists"
+      click_on 'All Playlists'
       within "#playlist-#{playlist.id}" do
-        click_on "View"
+        click_on 'View'
       end
 
-      assert_text "Cat Videos"
+      assert_text 'Cat Videos'
     end
   end
 
-  test "deleting a playlist" do
+  test 'deleting a playlist' do
     mock_video_service do
-      playlist = Playlist.create!(name: "Cat Videos")
-      Playlist.create!(name: "Chicken Videos")
+      playlist = Playlist.create!(name: 'Cat Videos')
+      Playlist.create!(name: 'Chicken Videos')
 
-      assert_changes -> { Playlist.where(name: "Cat Videos").count }, -1 do
+      assert_changes -> { Playlist.where(name: 'Cat Videos').count }, -1 do
         visit root_path
 
-        click_on "All Playlists"
+        click_on 'All Playlists'
         within "#playlist-#{playlist.id}" do
-          click_on "Delete"
+          click_on 'Delete'
         end
 
-        within ".album" do
-          refute_text "Cat Videos"
-          assert_text "Chicken Videos"
+        within '.album' do
+          refute_text 'Cat Videos'
+          assert_text 'Chicken Videos'
         end
       end
     end
   end
 
-  test "interacting with a playlist with videos" do
+  test 'interacting with a playlist with videos' do
     mock_video_service do
-      playlist = Playlist.create!(name: "Cat Videos")
-      one = PlaylistVideo.create!(playlist: playlist, video_id:  short_video["video_id"])
-      two = PlaylistVideo.create!(playlist: playlist, video_id:  long_video["video_id"])
+      playlist = Playlist.create!(name: 'Cat Videos')
+      one = PlaylistVideo.create!(playlist: playlist, video_id:  short_video['video_id'])
+      two = PlaylistVideo.create!(playlist: playlist, video_id:  long_video['video_id'])
 
       visit playlist_path(playlist)
 
-      within ".album" do
+      within '.album' do
         within "##{one.video_id}" do
-          assert_text one.video["description"]
+          assert_text one.video['description']
         end
         within "##{two.video_id}" do
-          assert_text two.video["description"]
+          assert_text two.video['description']
         end
       end
 

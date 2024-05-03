@@ -5,9 +5,9 @@ module ApplicationHelper
   # @see link_to
   def header_item(name, url)
     if request.original_fullpath == url
-      options = { class: "nav-link active", "aria-current" => "page" }
+      options = { class: 'nav-link active', 'aria-current' => 'page' }
     else
-      options = { class: "nav-link" }
+      options = { class: 'nav-link' }
     end
     link_to(name, url, options)
   end

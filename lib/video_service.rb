@@ -1,4 +1,4 @@
-require "net/http"
+require 'net/http'
 
 # A service used to interact with the Video API. The results are cached so that we do not have to repeatedly hit an
 # external API. The decision was made to store video data within this service as it makes data integrity a lot
@@ -34,9 +34,9 @@ class VideoService
       while true do
         uri = URI("#{ENV['BASE_API_URL']}/videos?page=#{page}")
         result = JSON.parse(Net::HTTP.get(uri))
-        data += result["videos"]
+        data += result['videos']
         page += 1
-        break if result["videos"].length < api_page_size
+        break if result['videos'].length < api_page_size
       end
       data
     end
@@ -48,7 +48,7 @@ class VideoService
   # @see VideoService.get which is used internally for fetching the data.
   def self.get_by_video_id(video_id)
     Rails.cache.fetch(CACHE_KEYS[__method__]) do
-      VideoService.get.each_with_object(Hash.new({})) { |item, hash| hash[item["video_id"]] = item }
+      VideoService.get.each_with_object(Hash.new({})) { |item, hash| hash[item['video_id']] = item }
     end[video_id]
   end
 end

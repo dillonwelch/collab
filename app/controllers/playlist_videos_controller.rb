@@ -1,4 +1,4 @@
-require "net/http"
+require 'net/http'
 
 class PlaylistVideosController < ApplicationController
   protect_from_forgery with: :null_session, only: :swap
@@ -12,11 +12,11 @@ class PlaylistVideosController < ApplicationController
     playlist_id = playlist_video.playlist_id
     position = playlist_video.position
     playlist_video.destroy
-    PlaylistVideo.where(playlist_id: playlist_id).where("position > ?", position).each do |video|
+    PlaylistVideo.where(playlist_id: playlist_id).where('position > ?', position).each do |video|
       video.update(position: video.position - 1)
     end
 
-    redirect_to playlist_path(playlist_id), status: :see_other, notice: "Playlist entry successfully deleted."
+    redirect_to playlist_path(playlist_id), status: :see_other, notice: 'Playlist entry successfully deleted.'
   end
 
   def swap

@@ -22,6 +22,6 @@ class PlaylistVideo < ApplicationRecord
     return unless video_id.present?
     return if video.present?
 
-    errors.add(:video_id, "must exist")
+    errors.add(:video_id, 'must exist')
   end
 end
