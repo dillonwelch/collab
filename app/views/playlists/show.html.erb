@@ -3,7 +3,7 @@
     addEventListener(
       "dragstart", (event) => {
         // console.log("Start Pre: " + event.dataTransfer.getData("tex/**/t/plain"))
-        console.log(`dragstart: target.id = ${event.target.id}`);
+        // console.log(`dragstart: target.id = ${event.target.id}`);
         event.dataTransfer.setData("text/plain", event.target.id)
         event.dataTransfer.effectAllowed = "move";
         console.log("Start getData: " + event.dataTransfer.getData("text"))
@@ -21,10 +21,12 @@
     );
     addEventListener(
         "drop", (event) => {
-            console.log("Drop")
+            // console.log("Drop")
             // debugger;
           event.preventDefault();
-          console.log("End: " + event.dataTransfer.getData("text"))
+          debugger
+          console.log("End target: " + event.target.id)
+          console.log("End ID: " + event.dataTransfer.getData("text"))
         }
     );
     // addEventListener("dragstart", (event) => { drag(event); });
