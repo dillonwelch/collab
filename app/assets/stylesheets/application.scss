@@ -16,6 +16,13 @@
 
 @import "bootstrap";
 
+.playlist-draggable {
+  border-right: 0.1em;
+  border-style: none solid none none;
+  &:hover {
+    background-color: orange;
+  }
+}
 .video-card {
   &:hover {
     color: black;
