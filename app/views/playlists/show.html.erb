@@ -6,7 +6,7 @@
         // console.log(`dragstart: target.id = ${event.target.id}`);
         event.dataTransfer.setData("text/plain", event.target.id)
         event.dataTransfer.effectAllowed = "move";
-        console.log("Start getData: " + event.dataTransfer.getData("text"))
+        // console.log("Start getData: " + event.dataTransfer.getData("text"))
             // debugger
       }
     );
@@ -19,52 +19,60 @@
             // debugger
         }
     );
+
+    // See https://phuoc.ng/collection/html-dom/swap-two-nodes/
+    const swap = function (nodeA, nodeB) {
+        const parentA = nodeA.parentNode;
+        const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
+
+        // Move `nodeA` to before the `nodeB`
+        nodeB.parentNode.insertBefore(nodeA, nodeB);
+
+        // Move `nodeB` to before the sibling of `nodeA`
+        parentA.insertBefore(nodeB, siblingA);
+    };
+
     addEventListener(
         "drop", (event) => {
-            // console.log("Drop")
-            // debugger;
           event.preventDefault();
-          // debugger
-          console.log("End target: " + event.target.id)
-          console.log("End ID: " + event.dataTransfer.getData("text"))
+          const dragId = event.dataTransfer.getData("text");
+          const dragParentNode = document.getElementById(dragId).parentNode;
+          const dropId = event.target.id;
+          const dropParentNode = event.target.parentNode;
+          swap(dragParentNode, dropParentNode);
+
+          const apiUrl = 'http://localhost:3000/playlist_videos/swap';
+          const data = {
+              from_id: dragId.replace("draggable-", ''),
+              to_id: dropId.replace("draggable-", ''),
+          };
+
+          const requestOptions = {
+              method: 'PATCH',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+          };
+
+          console.log("wow")
+          fetch(apiUrl, requestOptions).then(response => {
+                  console.log("success?")
+                  if (!response.ok) {
+                      throw new Error('Network response was not ok');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  outputElement.textContent = JSON.stringify(data, null, 2);
+              })
+              .catch(error => {
+                  console.error
+
+                  ('Error:', error);
+              });
         }
     );
-    // addEventListener("dragstart", (event) => { drag(event); });
-    // addEventListener("drop", (event) => { drop(event); });
-    // addEventListener("drag", (event) => { console.log(event)});
-
-    // ondrag = (event) => { console.log(event) };
-
-    // addEventListener("dragend", (event) => { console.log(event.target.id); });
-
-    // ondragend = (event) => { console.log(event)};
-    // function allowDrop(allowdropevent) {
-    //     // console.log("Allow drop!: " + allowdropevent.dataTransfer.getData("allowDrop"))
-    //     // allowdropevent.dataTransfer.setData("allowDrop", "1");
-    //     // // allowdropevent.target.style.color = "blue";
-    //     // allowdropevent.preventDefault();
-    // }
-    //
-    // function drag(dragevent) {
-    //     console.log("Drag!: " + dragevent.dataTransfer.getData("allowDrop"))
-    //     dragevent.dataTransfer.setData("drag", "1");
-    //     // dragevent.dataTransfer.setData("text", dragevent.target.id);
-    //     // dragevent.target.style.color = "green";
-    // }
-    //
-    // function drop(dropevent) {
-    //     console.log("Allow drop!")
-    //     console.log("Drop! " + dropevent.dataTransfer.getData("drop"))
-    //     dropevent.dataTransfer.setData("drop", "1");
-    //     dropevent.preventDefault();
-    //     // const data = dropevent.dataTransfer.getData("text");
-    //     // dropevent.target.appendChild(document.getElementById(data));
-    //     // document.getElementById("drag").style.color = "black";
-    // }
-    //
-    // addEventListener("dragover", (event) => { allowDrop(event); });
-    // addEventListener("dragstart", (event) => { drag(event); });
-    // addEventListener("drop", (event) => { drop(event); });
 </script>
 
 <h1 style="text-align: center"><%= @playlist.name %></h1>

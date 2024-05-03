@@ -1,6 +1,7 @@
 require "net/http"
 
 class PlaylistVideosController < ApplicationController
+  protect_from_forgery with: :null_session, only: :swap
   def create
     # TODO: flash messages
     playlist_video = PlaylistVideo.new(playlist_video_params)
@@ -22,9 +23,9 @@ class PlaylistVideosController < ApplicationController
 
   # TODO: Reorder on UI
   def swap
-    from_video = PlaylistVideo.find(params[:from_id])
+    from_video = PlaylistVideo.find_by_video_id(params[:from_id])
     from_position = from_video.position
-    to_video = PlaylistVideo.find(params[:to_id])
+    to_video = PlaylistVideo.find_by_video_id(params[:to_id])
     to_position = to_video.position
 
     from_video.update!(position: to_position)
