@@ -28,4 +28,7 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  controllers:
+    playlist_videos_controller:
+      destroy:
+        notice: 'Playlist entry successfully deleted.'

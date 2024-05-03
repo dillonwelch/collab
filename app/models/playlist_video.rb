@@ -21,7 +21,7 @@ class PlaylistVideo < ApplicationRecord
   private
 
   def video_id_exists
-    return unless video_id.present?
+    return if video_id.blank?
     return if video.present?
 
     errors.add(:video_id, 'must exist')

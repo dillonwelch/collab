@@ -13,6 +13,10 @@ class PlaylistsController < ApplicationController
     @playlist = Playlist.new
   end
 
+  def edit
+    @playlist = Playlist.find(params[:id])
+  end
+
   def create
     @playlist = Playlist.new(playlist_params)
 
@@ -21,10 +25,6 @@ class PlaylistsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
-    @playlist = Playlist.find(params[:id])
   end
 
   def update

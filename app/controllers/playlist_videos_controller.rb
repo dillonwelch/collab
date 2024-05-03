@@ -14,17 +14,21 @@ class PlaylistVideosController < ApplicationController
     playlist_id = playlist_video.playlist_id
     position = playlist_video.position
     playlist_video.destroy
-    PlaylistVideo.where(playlist_id:).where('position > ?', position).each do |video|
+    PlaylistVideo.where(playlist_id:).where('position > ?', position).find_each do |video|
       video.update(position: video.position - 1)
     end
 
-    redirect_to playlist_path(playlist_id), status: :see_other, notice: 'Playlist entry successfully deleted.'
+    redirect_to(
+      playlist_path(playlist_id),
+      status: :see_other,
+      notice: I18n.t('controllers.playlist_videos_controller.destroy.notice')
+    )
   end
 
   def swap
-    from_video = PlaylistVideo.find_by_video_id(params[:from_id])
+    from_video = PlaylistVideo.find_by(video_id: params[:from_id])
     from_position = from_video.position
-    to_video = PlaylistVideo.find_by_video_id(params[:to_id])
+    to_video = PlaylistVideo.find_by(video_id: params[:to_id])
     to_position = to_video.position
 
     from_video.update!(position: to_position)
