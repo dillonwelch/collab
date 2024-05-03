@@ -50,7 +50,7 @@ class PlaylistVideosControllerTest < ActionDispatch::IntegrationTest
   end
 
   class PlaylistVideosControllerSwapTest < PlaylistVideosControllerTest
-    test'swaps the position of two playlist videos' do
+    test 'swaps the position of two playlist videos' do
       mock_video_service do
         playlist = Playlist.create!(name: 'Cat Videos')
         from_video = PlaylistVideo.create!(playlist: playlist, video_id: short_video['video_id'])

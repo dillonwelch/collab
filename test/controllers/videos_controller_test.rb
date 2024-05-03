@@ -13,8 +13,8 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
 
     # This is gnarly but I can't figure out a better way
     assert_select(
-        "##{short_video['video_id']}>div",
-        html: /<img alt=\"Thumbnail image for video #{short_video['video_id']}\" src=\"#{short_video['thumbnail_url']}\">/
+      "##{short_video['video_id']}>div",
+      html: /<img alt=\"Thumbnail image for video #{short_video['video_id']}\" src=\"#{short_video['thumbnail_url']}\">/
     )
     assert_select "##{short_video['video_id']}>div" do
       assert_select '.title', "#{short_video['title']}"
