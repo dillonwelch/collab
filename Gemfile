@@ -44,6 +44,15 @@ gem "bootsnap", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
+# Load in values from .env into ENV.
+gem "dotenv"
+
+# Styling!!!
+gem "bootstrap"
+gem "sassc-rails"
+
+# TODO: rubocop
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
@@ -64,13 +73,11 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem "webmock"
-  gem "vcr"
-  gem "minitest-stub_any_instance"
-end
 
-# TODO: docs
-# TODO: rubocop
-gem "dotenv"
-gem "bootstrap"
-gem "sassc-rails"
+  # Reject non-localhost HTTP requests that have not been recorded.
+  gem "webmock"
+  # Record and playback non-localhost HTTP requests.
+  gem "vcr"
+
+  gem "minitest-stub_any_instance" # TODO: Not sure if needed
+end
