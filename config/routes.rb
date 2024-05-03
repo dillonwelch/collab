@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -11,5 +13,5 @@ Rails.application.routes.draw do
   resources :playlists
 
   patch '/playlist_videos/swap', to: 'playlist_videos#swap'
-  resources :playlist_videos, only: %i(create destroy)
+  resources :playlist_videos, only: %i[create destroy]
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class VideosControllerTest < ActionDispatch::IntegrationTest
@@ -14,11 +16,11 @@ class VideosControllerTest < ActionDispatch::IntegrationTest
     # This is gnarly but I can't figure out a better way
     assert_select(
       "##{short_video['video_id']}>div",
-      html: /<img alt=\"Thumbnail image for video #{short_video['video_id']}\" src=\"#{short_video['thumbnail_url']}\">/
+      html: /<img alt="Thumbnail image for video #{short_video['video_id']}" src="#{short_video['thumbnail_url']}">/
     )
     assert_select "##{short_video['video_id']}>div" do
-      assert_select '.title', "#{short_video['title']}"
-      assert_select '.description', "#{short_video['description']}"
+      assert_select '.title', short_video['title'].to_s
+      assert_select '.description', short_video['description'].to_s
       assert_select '.views', "#{short_video['views']} views"
     end
   end

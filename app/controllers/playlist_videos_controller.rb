@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'net/http'
 
 class PlaylistVideosController < ApplicationController
@@ -12,7 +14,7 @@ class PlaylistVideosController < ApplicationController
     playlist_id = playlist_video.playlist_id
     position = playlist_video.position
     playlist_video.destroy
-    PlaylistVideo.where(playlist_id: playlist_id).where('position > ?', position).each do |video|
+    PlaylistVideo.where(playlist_id:).where('position > ?', position).each do |video|
       video.update(position: video.position - 1)
     end
 

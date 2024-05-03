@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'application_system_test_case'
 
 class VideosTest < ApplicationSystemTestCase
@@ -88,8 +90,8 @@ class VideosTest < ApplicationSystemTestCase
   test 'interacting with a playlist with videos' do
     mock_video_service do
       playlist = Playlist.create!(name: 'Cat Videos')
-      one = PlaylistVideo.create!(playlist: playlist, video_id:  short_video['video_id'])
-      two = PlaylistVideo.create!(playlist: playlist, video_id:  long_video['video_id'])
+      one = PlaylistVideo.create!(playlist:, video_id:  short_video['video_id'])
+      two = PlaylistVideo.create!(playlist:, video_id:  long_video['video_id'])
 
       visit playlist_path(playlist)
 

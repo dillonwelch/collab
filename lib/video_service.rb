@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'net/http'
 
 # A service used to interact with the Video API. The results are cached so that we do not have to repeatedly hit an
@@ -12,12 +14,12 @@ class VideoService
   CACHE_KEYS = {
     get: :video_service_get,
     get_by_video_id: :video_service_get_by_video_id
-  }
+  }.freeze
 
   # Will clear all caches so that data will be refreshed.
   # @see VideoService::CACHE_KEYS for list of keys that will be cleared.
   def self.cache_bust
-    CACHE_KEYS.values.each do |key|
+    CACHE_KEYS.each_value do |key|
       Rails.cache.delete(key)
     end
   end
@@ -31,8 +33,8 @@ class VideoService
     Rails.cache.fetch(CACHE_KEYS[__method__]) do
       page = 1
       data = []
-      while true do
-        uri = URI("#{ENV['BASE_API_URL']}/videos?page=#{page}")
+      loop do
+        uri = URI("#{ENV.fetch('BASE_API_URL', nil)}/videos?page=#{page}")
         result = JSON.parse(Net::HTTP.get(uri))
         data += result['videos']
         page += 1

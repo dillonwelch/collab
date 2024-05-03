@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class PlaylistTest < ActiveSupport::TestCase
@@ -15,8 +17,8 @@ class PlaylistTest < ActiveSupport::TestCase
   test 'has an association to PlaylistVideo' do
     mock_video_service do
       playlist = Playlist.create!(name: 'Good test playlist')
-      one = PlaylistVideo.create!(playlist: playlist, video_id:  short_video['video_id'])
-      two = PlaylistVideo.create!(playlist: playlist, video_id:  long_video['video_id'])
+      one = PlaylistVideo.create!(playlist:, video_id:  short_video['video_id'])
+      two = PlaylistVideo.create!(playlist:, video_id:  long_video['video_id'])
 
       assert_equal playlist.playlist_videos, [one, two]
     end
@@ -25,8 +27,8 @@ class PlaylistTest < ActiveSupport::TestCase
   test 'destroys associated PlaylistVideos upon destruction' do
     mock_video_service do
       playlist = Playlist.create!(name: 'Good test playlist')
-      one = PlaylistVideo.create!(playlist: playlist, video_id:  short_video['video_id'])
-      two = PlaylistVideo.create!(playlist: playlist, video_id:  long_video['video_id'])
+      PlaylistVideo.create!(playlist:, video_id:  short_video['video_id'])
+      PlaylistVideo.create!(playlist:, video_id:  long_video['video_id'])
 
       assert_changes -> { PlaylistVideo.count }, from: 2, to: 0 do
         playlist.destroy!

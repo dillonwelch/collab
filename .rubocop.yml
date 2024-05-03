@@ -1,4 +1,9 @@
 AllCops:
   Exclude:
     - bin/*
+    - db/schema.rb
   NewCops: enable
+
+Style/Documentation:
+  Exclude:
+    - db/migrate/*

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class PlaylistsControllerTest < ActionDispatch::IntegrationTest
@@ -33,13 +35,13 @@ class PlaylistsControllerTest < ActionDispatch::IntegrationTest
     test 'request with a valid ID and videos displays the playlist info and video info' do
       mock_video_service do
         playlist = Playlist.create!(name: 'Cat Videos')
-        PlaylistVideo.create!(playlist: playlist, video_id: short_video['video_id'])
+        PlaylistVideo.create!(playlist:, video_id: short_video['video_id'])
 
         get playlist_path(playlist.id)
 
         assert_response :success
         assert_match 'Cat Videos', @response.body
-        assert_match "#{short_video["title"]}", @response.body
+        assert_match short_video['title'].to_s, @response.body
       end
     end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class PlaylistVideosControllerTest < ActionDispatch::IntegrationTest
@@ -34,11 +36,11 @@ class PlaylistVideosControllerTest < ActionDispatch::IntegrationTest
     test 'request destroys the playlist video' do
       mock_video_service do
         playlist = Playlist.create!(name: 'Cat Videos')
-        PlaylistVideo.create!(playlist: playlist, video_id: short_video['video_id'])
-        video = PlaylistVideo.create!(playlist: playlist, video_id: long_video['video_id'])
+        PlaylistVideo.create!(playlist:, video_id: short_video['video_id'])
+        video = PlaylistVideo.create!(playlist:, video_id: long_video['video_id'])
 
         assert_changes -> { video.reload.position }, from: 2, to: 1 do
-          assert_difference -> { PlaylistVideo.where(playlist: playlist).count }, -1 do
+          assert_difference -> { PlaylistVideo.where(playlist:).count }, -1 do
             delete playlist_video_path(playlist)
           end
         end
@@ -53,8 +55,8 @@ class PlaylistVideosControllerTest < ActionDispatch::IntegrationTest
     test 'swaps the position of two playlist videos' do
       mock_video_service do
         playlist = Playlist.create!(name: 'Cat Videos')
-        from_video = PlaylistVideo.create!(playlist: playlist, video_id: short_video['video_id'])
-        to_video = PlaylistVideo.create!(playlist: playlist, video_id: long_video['video_id'])
+        from_video = PlaylistVideo.create!(playlist:, video_id: short_video['video_id'])
+        to_video = PlaylistVideo.create!(playlist:, video_id: long_video['video_id'])
 
         assert_changes -> { from_video.reload.position }, from: 1, to: 2 do
           assert_changes -> { to_video.reload.position }, from: 2, to: 1 do

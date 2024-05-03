@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class PlaylistVideoTest < ActiveSupport::TestCase
@@ -44,7 +46,7 @@ class PlaylistVideoTest < ActiveSupport::TestCase
   test 'sets position to 1 on create if no videos are on the playlist' do
     mock_video_service do
       playlist = Playlist.create!(name: 'A good playlist')
-      playlist_video = PlaylistVideo.create(playlist: playlist, video_id: short_video['video_id'])
+      playlist_video = PlaylistVideo.create(playlist:, video_id: short_video['video_id'])
       assert_equal 1, playlist_video.position
     end
   end
@@ -52,8 +54,8 @@ class PlaylistVideoTest < ActiveSupport::TestCase
   test 'sets position to newest on create if videos are on the playlist' do
     mock_video_service do
       playlist = Playlist.create!(name: 'A good playlist')
-      PlaylistVideo.create!(playlist: playlist, video_id: short_video['video_id'])
-      playlist_video = PlaylistVideo.create!(playlist: playlist, video_id: long_video['video_id'])
+      PlaylistVideo.create!(playlist:, video_id: short_video['video_id'])
+      playlist_video = PlaylistVideo.create!(playlist:, video_id: long_video['video_id'])
       assert_equal 2, playlist_video.position
     end
   end

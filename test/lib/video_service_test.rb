@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # frozen_string_literal => true
 
 require 'test_helper'
@@ -15,14 +17,14 @@ class VideoServiceTest < ActiveSupport::TestCase
 
   class VideoServiceCacheBustTest < VideoServiceTest
     test 'clears the relevant caches' do
-      VideoService::CACHE_KEYS.values.each do |key|
+      VideoService::CACHE_KEYS.each_value do |key|
         Rails.cache.write(key, 'meow')
         assert_equal 'meow', Rails.cache.read(key)
       end
 
       VideoService.cache_bust
 
-      VideoService::CACHE_KEYS.values.each do |key|
+      VideoService::CACHE_KEYS.each_value do |key|
         assert_nil Rails.cache.read(key)
       end
     end
@@ -61,8 +63,8 @@ class VideoServiceTest < ActiveSupport::TestCase
         'id' => 1,
         'title' => 'thanks for 5 million',
         'video_id' => 'H1tQhK0n5Qk',
-        'views' => 279357,
-        'likes' => 66689,
+        'views' => 279_357,
+        'likes' => 66_689,
         'comments' => 3144,
         'description' => '#shorts',
         'thumbnail_url' => 'https://i.ytimg.com/vi/H1tQhK0n5Qk/default.jpg',
@@ -79,8 +81,8 @@ class VideoServiceTest < ActiveSupport::TestCase
         'id' => 1,
         'title' => 'thanks for 5 million',
         'video_id' => 'H1tQhK0n5Qk',
-        'views' => 279357,
-        'likes' => 66689,
+        'views' => 279_357,
+        'likes' => 66_689,
         'comments' => 3144,
         'description' => '#shorts',
         'thumbnail_url' => 'https://i.ytimg.com/vi/H1tQhK0n5Qk/default.jpg',
