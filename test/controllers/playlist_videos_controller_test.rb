@@ -58,7 +58,7 @@ class PlaylistVideosControllerTest < ActionDispatch::IntegrationTest
 
         assert_changes -> { from_video.reload.position }, from: 1, to: 2 do
           assert_changes -> { to_video.reload.position }, from: 2, to: 1 do
-            patch playlist_videos_swap_path, params: { from_id: from_video.id, to_id: to_video.id }
+            patch playlist_videos_swap_path, params: { from_id: from_video.video_id, to_id: to_video.video_id }
           end
         end
       end
