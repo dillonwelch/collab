@@ -1,23 +1,27 @@
 # README
 
+Problem statement can be found [here](https://gist.github.com/dillonwelch/51a59f1b9a68c2c45423f21427f68346).
+
 ## Requirements
 
 * Ruby 3.2.2
+* Postgres
 
 ## Setup
 
-* Create a file called `.env` and add an entry for `BASE_API_URL=YOUR_URL`
+* Create a file called `.env` and add an entry for `BASE_API_URL=YOUR_URL` (see problem statement for this URL)
 * `bundle install`
-* `rails s`
+* `bundle exec rails db:create db:migrate`
+* `bundle exec rails s`
 * Navigate to `http://localhost:3000/`
 * Enjoy your videos.
 * If you want to fetch fresh results from the API, add `?cache_bust=true` to your URL.
 
 And to run tests:
-* `rails test && rails test:system`
+* `bundle exec rails test && bundle exec rails test:system`
 
 And to check for style errors:
-* `rubocop`
+* `bundle exec rubocop`
 
 ## Code Documentation
 
