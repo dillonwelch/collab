@@ -58,6 +58,8 @@ group :development, :test do
   gem 'debug', platforms: %i[mri windows]
 end
 
+gem "irb", "1.4.0" # Locking to an old version so that the app will run on replit.
+
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
